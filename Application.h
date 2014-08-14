@@ -33,8 +33,8 @@ namespace Eloquent {
 	static const std::string APP_VERSION	= "1.0";
 	static const std::string APP_RELEASE	= "BETA";
 	
-	static const std::string CONFIG_PATH		= "/etc/eloquent/eloquent.conf";
-	static const std::string EXT_CONFIG_PATH 	= "/etc/eloquent/extensions.conf";
+	static const std::string CONFIG_PATH		= "/usr/local/etc/eloquent/eloquent.conf";
+	static const std::string EXT_CONFIG_PATH 	= "/usr/local/etc/eloquent/extensions.conf";
 	static const std::string LOG_PATH			= "/var/log/eloquent.log";
 	
 	///////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ namespace Eloquent {
 		
 		Application& Init( int argc, const char* argv[] );
 		
-		boost::shared_ptr<ExtensionFactory> LoadExtension( const boost::filesystem::path& );
+		ExtensionFactory* LoadExtension( const boost::filesystem::path& );
 		int Run();
 
 		static Application& Instance();
@@ -67,7 +67,7 @@ namespace Eloquent {
 		streamlog::severity_log m_Log;
 		
 		// Extensions
-		std::deque<std::tuple<void*, std::string, boost::shared_ptr<ExtensionFactory>>> m_Extensions;
+		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
 		
 		// Queue
 		std::queue<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queue;

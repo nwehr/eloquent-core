@@ -51,20 +51,20 @@ Eloquent::Application& Eloquent::Application::Instance() {
 }
 
 Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[] ) {
-	boost::program_options::options_description OptionsDescription( "Options" );
-	
-	OptionsDescription.add_options()
-		("help,h"			, "Displays options")
-		("version,v"		, "Displays version")
-		("log,l"			, boost::program_options::value<std::string>(), "Set path to log file")
-		("log-level,s"		, boost::program_options::value<std::string>(), "Set log severity level\n[ trace | debug | info | warning | error | fatal ]")
-		("config,c"			, boost::program_options::value<std::string>(), "Set path to eloquent config file")
-		("ext-config,e"		, boost::program_options::value<std::string>(), "Set path to extensions config file")
-		;
-
-	boost::program_options::variables_map VariableMap;
-
 	try {
+		boost::program_options::options_description OptionsDescription( "Options" );
+		
+		OptionsDescription.add_options()
+			("help,h"			, "Displays options")
+			("version,v"		, "Displays version")
+			("log,l"			, boost::program_options::value<std::string>(), "Set path to log file")
+			("log-level,s"		, boost::program_options::value<std::string>(), "Set log severity level\n[ trace | debug | info | warning | error | fatal ]")
+			("config,c"			, boost::program_options::value<std::string>(), "Set path to eloquent config file")
+			("ext-config,e"		, boost::program_options::value<std::string>(), "Set path to extensions config file")
+			;
+
+		boost::program_options::variables_map VariableMap;
+
 		boost::program_options::store( boost::program_options::parse_command_line( argc, argv, OptionsDescription ), VariableMap );
 		
 		boost::program_options::notify( VariableMap );
@@ -111,129 +111,162 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 			m_ExtConfigPath = boost::filesystem::path( VariableMap["ext-config"].as<std::string>() );
 		}
 
+		m_Log.set_severity( m_LogLevel );
 
+		std::string m_LogPathString = m_LogPath.string();
+
+		m_Log.add_stream( &std::cout );
+		m_Log.add_stream( new std::ofstream( m_LogPathString.c_str(), std::ios_base::out ), true );
+
+		{
+			std::unique_lock<std::mutex> LogLock( m_LogMutex );
+			m_Log( LogSeverity::SEV_INFO ) << "Application::Application() - info - setting up application" << std::endl;
+		}
+
+		return *this;
 		
 	} catch( boost::program_options::error& e ) {
 		std::cout << "eloquentd: " << e.what() << std::endl;
-		std::cout << OptionsDescription << std::endl;
 		exit( EXIT_FAILURE );
-	}
-
-	m_Log.set_severity( m_LogLevel );
-
-	std::string m_LogPathString = m_LogPath.string();
-
-	m_Log.add_stream( &std::cout );
-	m_Log.add_stream( new std::ofstream( m_LogPathString.c_str(), std::ios_base::out ), true );
-
-	{
+	} catch( std::exception& e ) {
 		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_INFO ) << "Application::Application() - info - setting up application" << std::endl;
+		m_Log( LogSeverity::SEV_ERROR ) << "Application::Application() - error - " << e.what() << std::endl;
 	}
 
-	return *this;
+	throw std::runtime_error( "Applicatoin::Init() not returning" ); 
+
 }
 
 Eloquent::Application::~Application(){
-	for( std::deque<std::tuple<void*, std::string, boost::shared_ptr<ExtensionFactory>>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it )
+	for( std::deque<std::tuple<void*, std::string, ExtensionFactory*>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it ) {
+		delete std::get<2>( *it );
 		dlclose( std::get<0>( *it ) );
+	}
+		
 }
 
-boost::shared_ptr<Eloquent::ExtensionFactory> Eloquent::Application::LoadExtension( const boost::filesystem::path& i_ExtensionPath ) {
-	for( std::deque<std::tuple<void*, std::string, boost::shared_ptr<ExtensionFactory>>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it ) {
-		if( i_ExtensionPath.string() == std::get<1>( *it ) ) {
-			return std::get<2>( *it );
+Eloquent::ExtensionFactory* Eloquent::Application::LoadExtension( const boost::filesystem::path& i_ExtensionPath ) {
+	try {
+		for( std::tuple<void*, std::string, ExtensionFactory*> Extension : m_Extensions ) {
+			if( i_ExtensionPath.string() == std::get<1>( Extension ) ) {
+				return std::get<2>( Extension );
+			}
+
 		}
-	}
-	
-	boost::filesystem::path ExtensionPath = i_ExtensionPath;
-	
-	void* Extension = dlopen( ExtensionPath.string().c_str(), RTLD_LAZY | RTLD_LOCAL );
-	
-	if( !Extension ) {
+
+		// for( std::deque<std::tuple<void*, std::string, ExtensionFactory*>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it ) {
+		// 	if( i_ExtensionPath.string() == std::get<1>( *it ) ) {
+		// 		return std::get<2>( *it );
+		// 	}
+		// }
+		
+		boost::filesystem::path ExtensionPath = i_ExtensionPath;
+		
+		void* Extension = dlopen( ExtensionPath.string().c_str(), RTLD_LAZY | RTLD_LOCAL );
+		
+		if( !Extension ) {
+			std::unique_lock<std::mutex> LogLock( m_LogMutex );
+			m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - no extension at " << ExtensionPath.string() << std::endl;
+		} else {
+			void* AttachSymbol = dlsym( Extension, "Attach" );
+			
+			if( !AttachSymbol ) {
+				std::unique_lock<std::mutex> LogLock( m_LogMutex );
+				m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - not attach symbol at " << ExtensionPath.string() << std::endl;
+			} else {
+				{
+					std::unique_lock<std::mutex> LogLock( m_LogMutex );
+					m_Log( LogSeverity::SEV_DEBUG ) << "Application::LoadExtension() - debug - attaching library " << ExtensionPath.string() << std::endl;
+				}
+				
+				ExtensionFactory* (*AttachFunction)(void) = 0;
+				
+				*reinterpret_cast<void**>( &AttachFunction ) = AttachSymbol;
+				
+				ExtensionFactory* MyExtensionFactory = AttachFunction();
+				
+				m_Extensions.push_back( std::tuple<void*, std::string, ExtensionFactory*>( Extension, ExtensionPath.string(), MyExtensionFactory ) );
+				
+				return MyExtensionFactory;
+
+			}
+
+		}
+
+	} catch( std::exception& e ) {
 		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - no extension at " << ExtensionPath.string() << std::endl;
+		m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - " << e.what() << std::endl;
 	}
 
-	void* AttachSymbol = dlsym( Extension, "Attach" );
-	
-	if( !AttachSymbol ) {
-		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - not attach symbole at " << ExtensionPath.string() << std::endl;
-	}
-	
-	{
-		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_DEBUG ) << "Application::LoadExtension() - debug - attaching library " << ExtensionPath.string() << std::endl;
-	}
-	
-	boost::shared_ptr<ExtensionFactory> (*AttachFunction)(void) = 0;
-	
-	*reinterpret_cast<void**>( &AttachFunction ) = AttachSymbol;
-	
-	boost::shared_ptr<ExtensionFactory> MyExtensionFactory = AttachFunction();
-	
-	m_Extensions.push_back( std::tuple<void*, std::string, boost::shared_ptr<ExtensionFactory>>( Extension, ExtensionPath.string(), MyExtensionFactory ) );
-	
-	return MyExtensionFactory;
+	throw std::runtime_error( "Applicatoin::LoadExtension() not returning" ); 
 	
 }
 
 int Eloquent::Application::Run() {
-	std::vector<std::thread> ThreadGroup;
+	try {
+		if( !boost::filesystem::exists( m_ConfigPath ) ) {
+			std::stringstream ErrorMessage;
+			ErrorMessage << m_ConfigPath.string() << " does not exist";
 
-	if( !boost::filesystem::exists( m_ConfigPath ) ) {
-		throw std::exception();
-	}
-	
-	if( !boost::filesystem::exists( m_ConfigPath ) ) {
-		throw std::exception();
-	}
-	
-	std::ifstream ConfigStream( m_ConfigPath.string().c_str(), std::ifstream::in );
-	std::ifstream ExtConfigStream( m_ExtConfigPath.string().c_str(), std::ifstream::in );
-	
-	// Daemon Configurations
-	boost::property_tree::ptree ConfigTree;
-	boost::property_tree::info_parser::read_info( ConfigStream, ConfigTree );
-	
-	// Extension Configurations (Manifest)
-	boost::property_tree::ptree ExtConfigTree;
-	boost::property_tree::info_parser::read_info( ExtConfigStream, ExtConfigTree );
-	
-	// Start Looping Through Daemon Configurations
-	for( boost::property_tree::ptree::iterator ConfigTree_it = ConfigTree.begin(); ConfigTree_it != ConfigTree.end(); ++ConfigTree_it  ) {
-		boost::property_tree::ptree ConfigRoot = (*ConfigTree_it).second;
+			throw std::runtime_error( ErrorMessage.str() );
+
+		}
 		
-		m_Queue.push( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
+		if( !boost::filesystem::exists( m_ExtConfigPath ) ) {
+			std::stringstream ErrorMessage;
+			ErrorMessage << m_ExtConfigPath.string() << " does not exist";
+
+			throw std::runtime_error( ErrorMessage.str() );
+
+		}
+
+		std::vector<std::thread> ThreadGroup;
 		
-		for( boost::property_tree::ptree::iterator ConfigRoot_it = ConfigRoot.begin(); ConfigRoot_it != ConfigRoot.end(); ++ConfigRoot_it ) {
-			boost::property_tree::ptree::value_type ConfigNode = *ConfigRoot_it;
+		std::ifstream ConfigStream( m_ConfigPath.string().c_str(), std::ifstream::in );
+		std::ifstream ExtConfigStream( m_ExtConfigPath.string().c_str(), std::ifstream::in );
+		
+		// Daemon Configurations
+		boost::property_tree::ptree ConfigTree;
+		boost::property_tree::info_parser::read_info( ConfigStream, ConfigTree );
+		
+		// Extension Configurations (Manifest)
+		boost::property_tree::ptree ExtConfigTree;
+		boost::property_tree::info_parser::read_info( ExtConfigStream, ExtConfigTree );
+		
+		// Start Looping Through Daemon Configurations
+		for( boost::property_tree::ptree::iterator ConfigTree_it = ConfigTree.begin(); ConfigTree_it != ConfigTree.end(); ++ConfigTree_it  ) {
+			boost::property_tree::ptree ConfigRoot = (*ConfigTree_it).second;
 			
-			// Start Looping Through Extension Configurations (Manifest)
-			for( boost::property_tree::ptree::iterator ExtConfigTree_it = ExtConfigTree.begin(); ExtConfigTree_it != ExtConfigTree.end(); ++ExtConfigTree_it ) {
-				boost::property_tree::ptree ExtConfigRoot = (*ExtConfigTree_it).second;
+			m_Queue.push( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
+			
+			for( boost::property_tree::ptree::iterator ConfigRoot_it = ConfigRoot.begin(); ConfigRoot_it != ConfigRoot.end(); ++ConfigRoot_it ) {
+				boost::property_tree::ptree::value_type ConfigNode = *ConfigRoot_it;
 				
-				for( boost::property_tree::ptree::iterator ExtConfigRoot_it = ExtConfigRoot.begin(); ExtConfigRoot_it != ExtConfigRoot.end(); ++ ExtConfigRoot_it ) {
-					boost::property_tree::ptree::value_type ExtConfigNode = *ExtConfigRoot_it;
+				// Start Looping Through Extension Configurations (Manifest)
+				for( boost::property_tree::ptree::iterator ExtConfigTree_it = ExtConfigTree.begin(); ExtConfigTree_it != ExtConfigTree.end(); ++ExtConfigTree_it ) {
+					boost::property_tree::ptree ExtConfigRoot = (*ExtConfigTree_it).second;
 					
-					if( ConfigNode.first == ExtConfigNode.first && ConfigNode.second.get<std::string>( "name" ) == ExtConfigNode.second.get<std::string>( "name" ) ) {
-						boost::shared_ptr<ExtensionFactory> MyExtensionFactory = LoadExtension( boost::filesystem::path( ExtConfigNode.second.get<std::string>( "path" ) ) );
-						IOExtensionFactory* MyIOExtensionFactory = reinterpret_cast<IOExtensionFactory*>( &*MyExtensionFactory );
+					for( boost::property_tree::ptree::iterator ExtConfigRoot_it = ExtConfigRoot.begin(); ExtConfigRoot_it != ExtConfigRoot.end(); ++ ExtConfigRoot_it ) {
+						boost::property_tree::ptree::value_type ExtConfigNode = *ExtConfigRoot_it;
 						
-						IOExtension* MyExtension = MyIOExtensionFactory->New( ConfigNode
-																			 , m_LogMutex
-																			 , m_Log
-																			 , *std::get<0>( m_Queue.back() )
-																			 , *std::get<1>( m_Queue.back() )
-																			 , *std::get<2>( m_Queue.back() )
-																			 , std::get<3>( m_Queue.back() ) );
-						
-						if ( ConfigNode.first == "write" ) {
-							++std::get<3>( m_Queue.back() );
+						if( ConfigNode.first == ExtConfigNode.first && ConfigNode.second.get<std::string>( "name" ) == ExtConfigNode.second.get<std::string>( "name" ) ) {
+							ExtensionFactory* MyExtensionFactory = LoadExtension( boost::filesystem::path( ExtConfigNode.second.get<std::string>( "path" ) ) );
+							
+							IOExtension* MyExtension = reinterpret_cast<IOExtensionFactory*>( MyExtensionFactory )->New( ConfigNode
+																				 , m_LogMutex
+																				 , m_Log
+																				 , *std::get<0>( m_Queue.back() )
+																				 , *std::get<1>( m_Queue.back() )
+																				 , *std::get<2>( m_Queue.back() )
+																				 , std::get<3>( m_Queue.back() ) );
+							
+							if ( ConfigNode.first == "write" ) {
+								++std::get<3>( m_Queue.back() );
+							}
+							
+							ThreadGroup.push_back( std::thread( std::ref( *MyExtension ) ) );
+							
 						}
-						
-						ThreadGroup.push_back( std::thread( std::ref( *MyExtension ) ) );
 						
 					}
 					
@@ -243,11 +276,16 @@ int Eloquent::Application::Run() {
 			
 		}
 		
+		for( auto& thread: ThreadGroup )
+			thread.join();
+		
+		return 0;
+
+	} catch( std::exception& e ) {
+		std::unique_lock<std::mutex> LogLock( m_LogMutex );
+		m_Log( LogSeverity::SEV_ERROR ) << "Application::Run() - error - " << e.what() << std::endl;
 	}
 	
-	for( auto& thread: ThreadGroup )
-		thread.join();
-	
-	return 0;
-	
+	throw std::runtime_error( "Applicatoin::Run() not returning" ); 
+
 }

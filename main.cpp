@@ -3,9 +3,17 @@
 // See LICENSE.txt
 //
 
+// C++
+#include <iostream>
+
 // Internal
 #include "Application.h"
 
-int main( int argc, const char* argv[] ){
-	return Eloquent::Application::Instance().Init( argc, argv ).Run();
+int main( int argc, const char* argv[] ) {
+	try {
+		return Eloquent::Application::Instance().Init( argc, argv ).Run();	
+	} catch( std::exception& e ) {
+		std::cout << e.what() << std::endl;
+	}
+	
 }
