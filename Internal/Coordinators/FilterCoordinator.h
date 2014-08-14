@@ -17,6 +17,9 @@
 
 #include <boost/regex.hpp>
 
+// External
+#include <streamlog/streamlog.h>
+
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
 	// FilterCoordinator

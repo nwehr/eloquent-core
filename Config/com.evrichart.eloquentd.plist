@@ -5,10 +5,10 @@
 	<key>Label</key>
 	<string>com.evrichart.eloquentd</string>
 	<key>Program</key>
-	<string>/usr/sbin/eloquentd</string>
+	<string>/usr/local/sbin/eloquentd</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>--log-level trace</string>
+		<string>--log-level info</string>
 	</array>
 	<key>KeepAlive</key>
 	<true/>
