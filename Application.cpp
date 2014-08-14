@@ -159,6 +159,11 @@ Eloquent::ExtensionFactory* Eloquent::Application::LoadExtension( const boost::f
 
 		boost::filesystem::path ExtensionPath = i_ExtensionPath;
 		
+		if( !boost::filesystem::exists( ExtensionPath ) ) {
+			std::unique_lock<std::mutex> LogLock( m_LogMutex );
+			m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - (boost) no extension at " << ExtensionPath.string() << std::endl;
+		}
+		
 		void* Extension = dlopen( ExtensionPath.string().c_str(), RTLD_LAZY | RTLD_LOCAL );
 		
 		if( !Extension ) {
