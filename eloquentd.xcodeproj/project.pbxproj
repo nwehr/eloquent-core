@@ -8,21 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5827E437199D3A22006451E4 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3CD199D3A22006451E4 /* Application.cpp */; };
-		5827E438199D3A22006451E4 /* CMakeCCompilerId.c in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3DB199D3A22006451E4 /* CMakeCCompilerId.c */; };
-		5827E439199D3A22006451E4 /* CMakeCXXCompilerId.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3DE199D3A22006451E4 /* CMakeCXXCompilerId.cpp */; };
-		5827E43A199D3A22006451E4 /* FilterCoordinator.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3ED199D3A22006451E4 /* FilterCoordinator.cpp.o */; };
-		5827E43B199D3A22006451E4 /* Extension.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3EF199D3A22006451E4 /* Extension.cpp.o */; };
-		5827E43C199D3A22006451E4 /* ExtensionFactory.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F0199D3A22006451E4 /* ExtensionFactory.cpp.o */; };
-		5827E43D199D3A22006451E4 /* FilterExtension.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F1199D3A22006451E4 /* FilterExtension.cpp.o */; };
-		5827E43E199D3A22006451E4 /* FilterExtensionFactory.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F2199D3A22006451E4 /* FilterExtensionFactory.cpp.o */; };
-		5827E43F199D3A22006451E4 /* Sink.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F4199D3A22006451E4 /* Sink.cpp.o */; };
-		5827E440199D3A22006451E4 /* IOExtension.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F5199D3A22006451E4 /* IOExtension.cpp.o */; };
-		5827E441199D3A22006451E4 /* IOExtensionFactory.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F6199D3A22006451E4 /* IOExtensionFactory.cpp.o */; };
-		5827E442199D3A22006451E4 /* QueueItem.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3F7199D3A22006451E4 /* QueueItem.cpp.o */; };
-		5827E443199D3A22006451E4 /* Application.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E3FB199D3A22006451E4 /* Application.cpp.o */; };
-		5827E444199D3A22006451E4 /* main.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E404199D3A22006451E4 /* main.cpp.o */; };
-		5827E445199D3A22006451E4 /* libEloquent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5827E40C199D3A22006451E4 /* libEloquent.dylib */; };
-		5827E446199D3A22006451E4 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5827E40D199D3A22006451E4 /* Makefile */; };
 		5827E447199D3A22006451E4 /* FilterCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E418199D3A22006451E4 /* FilterCoordinator.cpp */; };
 		5827E448199D3A22006451E4 /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E41B199D3A22006451E4 /* Extension.cpp */; };
 		5827E449199D3A22006451E4 /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E41D199D3A22006451E4 /* ExtensionFactory.cpp */; };
@@ -54,57 +39,6 @@
 		5827E3C2199D39E7006451E4 /* eloquentd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eloquentd; sourceTree = BUILT_PRODUCTS_DIR; };
 		5827E3CD199D3A22006451E4 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		5827E3CE199D3A22006451E4 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
-		5827E3D0199D3A22006451E4 /* cmake_install.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake_install.cmake; sourceTree = "<group>"; };
-		5827E3D1199D3A22006451E4 /* CMakeCache.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeCache.txt; sourceTree = "<group>"; };
-		5827E3D4199D3A22006451E4 /* CMakeCCompiler.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeCCompiler.cmake; sourceTree = "<group>"; };
-		5827E3D5199D3A22006451E4 /* CMakeCXXCompiler.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeCXXCompiler.cmake; sourceTree = "<group>"; };
-		5827E3D6199D3A22006451E4 /* CMakeDetermineCompilerABI_C.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CMakeDetermineCompilerABI_C.bin; sourceTree = "<group>"; };
-		5827E3D7199D3A22006451E4 /* CMakeDetermineCompilerABI_CXX.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = CMakeDetermineCompilerABI_CXX.bin; sourceTree = "<group>"; };
-		5827E3D8199D3A22006451E4 /* CMakeSystem.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeSystem.cmake; sourceTree = "<group>"; };
-		5827E3DA199D3A22006451E4 /* a.out */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = a.out; sourceTree = "<group>"; };
-		5827E3DB199D3A22006451E4 /* CMakeCCompilerId.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CMakeCCompilerId.c; sourceTree = "<group>"; };
-		5827E3DD199D3A22006451E4 /* a.out */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = a.out; sourceTree = "<group>"; };
-		5827E3DE199D3A22006451E4 /* CMakeCXXCompilerId.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CMakeCXXCompilerId.cpp; sourceTree = "<group>"; };
-		5827E3DF199D3A22006451E4 /* cmake.check_cache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake.check_cache; sourceTree = "<group>"; };
-		5827E3E0199D3A22006451E4 /* CMakeDirectoryInformation.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeDirectoryInformation.cmake; sourceTree = "<group>"; };
-		5827E3E1199D3A22006451E4 /* CMakeOutput.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeOutput.log; sourceTree = "<group>"; };
-		5827E3E4199D3A22006451E4 /* build.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.make; sourceTree = "<group>"; };
-		5827E3E5199D3A22006451E4 /* cmake_clean.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake_clean.cmake; sourceTree = "<group>"; };
-		5827E3E6199D3A22006451E4 /* CXX.includecache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CXX.includecache; sourceTree = "<group>"; };
-		5827E3E7199D3A22006451E4 /* depend.internal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = depend.internal; sourceTree = "<group>"; };
-		5827E3E8199D3A22006451E4 /* depend.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = depend.make; sourceTree = "<group>"; };
-		5827E3E9199D3A22006451E4 /* DependInfo.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DependInfo.cmake; sourceTree = "<group>"; };
-		5827E3EA199D3A22006451E4 /* flags.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flags.make; sourceTree = "<group>"; };
-		5827E3ED199D3A22006451E4 /* FilterCoordinator.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = FilterCoordinator.cpp.o; sourceTree = "<group>"; };
-		5827E3EF199D3A22006451E4 /* Extension.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Extension.cpp.o; sourceTree = "<group>"; };
-		5827E3F0199D3A22006451E4 /* ExtensionFactory.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = ExtensionFactory.cpp.o; sourceTree = "<group>"; };
-		5827E3F1199D3A22006451E4 /* FilterExtension.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = FilterExtension.cpp.o; sourceTree = "<group>"; };
-		5827E3F2199D3A22006451E4 /* FilterExtensionFactory.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = FilterExtensionFactory.cpp.o; sourceTree = "<group>"; };
-		5827E3F4199D3A22006451E4 /* Sink.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Sink.cpp.o; sourceTree = "<group>"; };
-		5827E3F5199D3A22006451E4 /* IOExtension.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = IOExtension.cpp.o; sourceTree = "<group>"; };
-		5827E3F6199D3A22006451E4 /* IOExtensionFactory.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = IOExtensionFactory.cpp.o; sourceTree = "<group>"; };
-		5827E3F7199D3A22006451E4 /* QueueItem.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QueueItem.cpp.o; sourceTree = "<group>"; };
-		5827E3F8199D3A22006451E4 /* link.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = link.txt; sourceTree = "<group>"; };
-		5827E3F9199D3A22006451E4 /* progress.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = progress.make; sourceTree = "<group>"; };
-		5827E3FB199D3A22006451E4 /* Application.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Application.cpp.o; sourceTree = "<group>"; };
-		5827E3FC199D3A22006451E4 /* build.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.make; sourceTree = "<group>"; };
-		5827E3FD199D3A22006451E4 /* cmake_clean.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmake_clean.cmake; sourceTree = "<group>"; };
-		5827E3FE199D3A22006451E4 /* CXX.includecache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CXX.includecache; sourceTree = "<group>"; };
-		5827E3FF199D3A22006451E4 /* depend.internal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = depend.internal; sourceTree = "<group>"; };
-		5827E400199D3A22006451E4 /* depend.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = depend.make; sourceTree = "<group>"; };
-		5827E401199D3A22006451E4 /* DependInfo.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DependInfo.cmake; sourceTree = "<group>"; };
-		5827E402199D3A22006451E4 /* flags.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flags.make; sourceTree = "<group>"; };
-		5827E403199D3A22006451E4 /* link.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = link.txt; sourceTree = "<group>"; };
-		5827E404199D3A22006451E4 /* main.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = main.cpp.o; sourceTree = "<group>"; };
-		5827E405199D3A22006451E4 /* progress.make */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = progress.make; sourceTree = "<group>"; };
-		5827E406199D3A22006451E4 /* Makefile.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.cmake; sourceTree = "<group>"; };
-		5827E407199D3A22006451E4 /* Makefile2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile2; sourceTree = "<group>"; };
-		5827E408199D3A22006451E4 /* progress.marks */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = progress.marks; sourceTree = "<group>"; };
-		5827E409199D3A22006451E4 /* TargetDirectories.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TargetDirectories.txt; sourceTree = "<group>"; };
-		5827E40A199D3A22006451E4 /* eloquentd */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = eloquentd; sourceTree = "<group>"; };
-		5827E40B199D3A22006451E4 /* install_manifest.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = install_manifest.txt; sourceTree = "<group>"; };
-		5827E40C199D3A22006451E4 /* libEloquent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libEloquent.dylib; sourceTree = "<group>"; };
-		5827E40D199D3A22006451E4 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5827E40E199D3A22006451E4 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5827E410199D3A22006451E4 /* com.evrichart.eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = com.evrichart.eloquentd.conf; sourceTree = "<group>"; };
 		5827E411199D3A22006451E4 /* com.evrichart.eloquentd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.evrichart.eloquentd.plist; sourceTree = "<group>"; };
@@ -147,18 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5827E43C199D3A22006451E4 /* ExtensionFactory.cpp.o in Frameworks */,
-				5827E43F199D3A22006451E4 /* Sink.cpp.o in Frameworks */,
-				5827E444199D3A22006451E4 /* main.cpp.o in Frameworks */,
-				5827E445199D3A22006451E4 /* libEloquent.dylib in Frameworks */,
-				5827E43B199D3A22006451E4 /* Extension.cpp.o in Frameworks */,
-				5827E441199D3A22006451E4 /* IOExtensionFactory.cpp.o in Frameworks */,
-				5827E43D199D3A22006451E4 /* FilterExtension.cpp.o in Frameworks */,
-				5827E43A199D3A22006451E4 /* FilterCoordinator.cpp.o in Frameworks */,
-				5827E440199D3A22006451E4 /* IOExtension.cpp.o in Frameworks */,
-				5827E443199D3A22006451E4 /* Application.cpp.o in Frameworks */,
-				5827E442199D3A22006451E4 /* QueueItem.cpp.o in Frameworks */,
-				5827E43E199D3A22006451E4 /* FilterExtensionFactory.cpp.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +106,6 @@
 		5827E3CC199D3A18006451E4 /* eloquentd */ = {
 			isa = PBXGroup;
 			children = (
-				5827E3CF199D3A22006451E4 /* build */,
 				5827E40F199D3A22006451E4 /* Config */,
 				5827E416199D3A22006451E4 /* Internal */,
 				5827E3CD199D3A22006451E4 /* Application.cpp */,
@@ -195,152 +116,6 @@
 				5827E40E199D3A22006451E4 /* CMakeLists.txt */,
 			);
 			name = eloquentd;
-			sourceTree = "<group>";
-		};
-		5827E3CF199D3A22006451E4 /* build */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3D0199D3A22006451E4 /* cmake_install.cmake */,
-				5827E3D1199D3A22006451E4 /* CMakeCache.txt */,
-				5827E3D2199D3A22006451E4 /* CMakeFiles */,
-				5827E40A199D3A22006451E4 /* eloquentd */,
-				5827E40B199D3A22006451E4 /* install_manifest.txt */,
-				5827E40C199D3A22006451E4 /* libEloquent.dylib */,
-				5827E40D199D3A22006451E4 /* Makefile */,
-			);
-			path = build;
-			sourceTree = "<group>";
-		};
-		5827E3D2199D3A22006451E4 /* CMakeFiles */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3D3199D3A22006451E4 /* 3.0.0 */,
-				5827E3DF199D3A22006451E4 /* cmake.check_cache */,
-				5827E3E0199D3A22006451E4 /* CMakeDirectoryInformation.cmake */,
-				5827E3E1199D3A22006451E4 /* CMakeOutput.log */,
-				5827E3E2199D3A22006451E4 /* CMakeTmp */,
-				5827E3E3199D3A22006451E4 /* Eloquent.dir */,
-				5827E3FA199D3A22006451E4 /* eloquentd.dir */,
-				5827E406199D3A22006451E4 /* Makefile.cmake */,
-				5827E407199D3A22006451E4 /* Makefile2 */,
-				5827E408199D3A22006451E4 /* progress.marks */,
-				5827E409199D3A22006451E4 /* TargetDirectories.txt */,
-			);
-			path = CMakeFiles;
-			sourceTree = "<group>";
-		};
-		5827E3D3199D3A22006451E4 /* 3.0.0 */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3D4199D3A22006451E4 /* CMakeCCompiler.cmake */,
-				5827E3D5199D3A22006451E4 /* CMakeCXXCompiler.cmake */,
-				5827E3D6199D3A22006451E4 /* CMakeDetermineCompilerABI_C.bin */,
-				5827E3D7199D3A22006451E4 /* CMakeDetermineCompilerABI_CXX.bin */,
-				5827E3D8199D3A22006451E4 /* CMakeSystem.cmake */,
-				5827E3D9199D3A22006451E4 /* CompilerIdC */,
-				5827E3DC199D3A22006451E4 /* CompilerIdCXX */,
-			);
-			path = 3.0.0;
-			sourceTree = "<group>";
-		};
-		5827E3D9199D3A22006451E4 /* CompilerIdC */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3DA199D3A22006451E4 /* a.out */,
-				5827E3DB199D3A22006451E4 /* CMakeCCompilerId.c */,
-			);
-			path = CompilerIdC;
-			sourceTree = "<group>";
-		};
-		5827E3DC199D3A22006451E4 /* CompilerIdCXX */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3DD199D3A22006451E4 /* a.out */,
-				5827E3DE199D3A22006451E4 /* CMakeCXXCompilerId.cpp */,
-			);
-			path = CompilerIdCXX;
-			sourceTree = "<group>";
-		};
-		5827E3E2199D3A22006451E4 /* CMakeTmp */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CMakeTmp;
-			sourceTree = "<group>";
-		};
-		5827E3E3199D3A22006451E4 /* Eloquent.dir */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3E4199D3A22006451E4 /* build.make */,
-				5827E3E5199D3A22006451E4 /* cmake_clean.cmake */,
-				5827E3E6199D3A22006451E4 /* CXX.includecache */,
-				5827E3E7199D3A22006451E4 /* depend.internal */,
-				5827E3E8199D3A22006451E4 /* depend.make */,
-				5827E3E9199D3A22006451E4 /* DependInfo.cmake */,
-				5827E3EA199D3A22006451E4 /* flags.make */,
-				5827E3EB199D3A22006451E4 /* Internal */,
-				5827E3F8199D3A22006451E4 /* link.txt */,
-				5827E3F9199D3A22006451E4 /* progress.make */,
-			);
-			path = Eloquent.dir;
-			sourceTree = "<group>";
-		};
-		5827E3EB199D3A22006451E4 /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3EC199D3A22006451E4 /* Coordinators */,
-				5827E3EE199D3A22006451E4 /* Extensions */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
-		5827E3EC199D3A22006451E4 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3ED199D3A22006451E4 /* FilterCoordinator.cpp.o */,
-			);
-			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		5827E3EE199D3A22006451E4 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3EF199D3A22006451E4 /* Extension.cpp.o */,
-				5827E3F0199D3A22006451E4 /* ExtensionFactory.cpp.o */,
-				5827E3F1199D3A22006451E4 /* FilterExtension.cpp.o */,
-				5827E3F2199D3A22006451E4 /* FilterExtensionFactory.cpp.o */,
-				5827E3F3199D3A22006451E4 /* Filters */,
-				5827E3F5199D3A22006451E4 /* IOExtension.cpp.o */,
-				5827E3F6199D3A22006451E4 /* IOExtensionFactory.cpp.o */,
-				5827E3F7199D3A22006451E4 /* QueueItem.cpp.o */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		5827E3F3199D3A22006451E4 /* Filters */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3F4199D3A22006451E4 /* Sink.cpp.o */,
-			);
-			path = Filters;
-			sourceTree = "<group>";
-		};
-		5827E3FA199D3A22006451E4 /* eloquentd.dir */ = {
-			isa = PBXGroup;
-			children = (
-				5827E3FB199D3A22006451E4 /* Application.cpp.o */,
-				5827E3FC199D3A22006451E4 /* build.make */,
-				5827E3FD199D3A22006451E4 /* cmake_clean.cmake */,
-				5827E3FE199D3A22006451E4 /* CXX.includecache */,
-				5827E3FF199D3A22006451E4 /* depend.internal */,
-				5827E400199D3A22006451E4 /* depend.make */,
-				5827E401199D3A22006451E4 /* DependInfo.cmake */,
-				5827E402199D3A22006451E4 /* flags.make */,
-				5827E403199D3A22006451E4 /* link.txt */,
-				5827E404199D3A22006451E4 /* main.cpp.o */,
-				5827E405199D3A22006451E4 /* progress.make */,
-			);
-			path = eloquentd.dir;
 			sourceTree = "<group>";
 		};
 		5827E40F199D3A22006451E4 /* Config */ = {
@@ -477,10 +252,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5827E44D199D3A22006451E4 /* RegexFilterAttach.cpp in Sources */,
-				5827E439199D3A22006451E4 /* CMakeCXXCompilerId.cpp in Sources */,
 				5827E452199D3A22006451E4 /* QueueItem.cpp in Sources */,
 				5827E437199D3A22006451E4 /* Application.cpp in Sources */,
-				5827E446199D3A22006451E4 /* Makefile in Sources */,
 				5827E453199D3A22006451E4 /* main.cpp in Sources */,
 				5827E451199D3A22006451E4 /* IOExtensionFactory.cpp in Sources */,
 				5827E44E199D3A22006451E4 /* RegexFilterFactory.cpp in Sources */,
@@ -488,7 +261,6 @@
 				5827E44B199D3A22006451E4 /* FilterExtensionFactory.cpp in Sources */,
 				5827E448199D3A22006451E4 /* Extension.cpp in Sources */,
 				5827E447199D3A22006451E4 /* FilterCoordinator.cpp in Sources */,
-				5827E438199D3A22006451E4 /* CMakeCCompilerId.c in Sources */,
 				5827E44F199D3A22006451E4 /* Sink.cpp in Sources */,
 				5827E450199D3A22006451E4 /* IOExtension.cpp in Sources */,
 				5827E44A199D3A22006451E4 /* FilterExtension.cpp in Sources */,

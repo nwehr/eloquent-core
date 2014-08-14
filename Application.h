@@ -70,7 +70,7 @@ namespace Eloquent {
 		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
 		
 		// Queue
-		std::queue<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queue;
+		std::deque<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queues;
 
 	public:
 		// Instance Pointer

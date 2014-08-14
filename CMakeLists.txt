@@ -17,7 +17,7 @@ set(Boost_USE_STATIC_LIBS        OFF)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME	 OFF)
 
-find_package( Boost 1.55.0 COMPONENTS system filesystem thread regex program_options )
+find_package( Boost 1.55.0 COMPONENTS system filesystem regex program_options )
 
 if(Boost_FOUND)
 	include_directories( ${Boost_INCLUDE_DIRS} )
@@ -116,11 +116,11 @@ install( TARGETS ${target_exe} DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin )
 ##############################################################################
 # Install - Configurations
 ##############################################################################
-if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" )
 	install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
 endif()
 
-if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/extensions.conf" )
 	install( FILES "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
 endif()
 

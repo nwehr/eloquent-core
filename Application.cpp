@@ -107,7 +107,7 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 			m_ConfigPath = boost::filesystem::path( VariableMap["config"].as<std::string>() );
 		}
 
-		if( VariableMap.count( "extensions" ) ) {
+		if( VariableMap.count( "ext-config" ) ) {
 			m_ExtConfigPath = boost::filesystem::path( VariableMap["ext-config"].as<std::string>() );
 		}
 
@@ -138,28 +138,30 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 }
 
 Eloquent::Application::~Application(){
-	for( std::deque<std::tuple<void*, std::string, ExtensionFactory*>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it ) {
-		delete std::get<2>( *it );
-		dlclose( std::get<0>( *it ) );
+	for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
+		delete std::get<2>( Extension );
+		dlclose( std::get<0>( Extension ) );
+		
+	}
+	
+	for( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>& Queue : m_Queues ) {
+		delete std::get<0>( Queue );
+		delete std::get<1>( Queue );
+		delete std::get<2>( Queue );
+		
 	}
 		
 }
 
 Eloquent::ExtensionFactory* Eloquent::Application::LoadExtension( const boost::filesystem::path& i_ExtensionPath ) {
 	try {
-		for( std::tuple<void*, std::string, ExtensionFactory*> Extension : m_Extensions ) {
+		for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
 			if( i_ExtensionPath.string() == std::get<1>( Extension ) ) {
 				return std::get<2>( Extension );
 			}
 
 		}
 
-		// for( std::deque<std::tuple<void*, std::string, ExtensionFactory*>>::iterator it = m_Extensions.begin(); it != m_Extensions.end(); ++it ) {
-		// 	if( i_ExtensionPath.string() == std::get<1>( *it ) ) {
-		// 		return std::get<2>( *it );
-		// 	}
-		// }
-		
 		boost::filesystem::path ExtensionPath = i_ExtensionPath;
 		
 		void* Extension = dlopen( ExtensionPath.string().c_str(), RTLD_LAZY | RTLD_LOCAL );
@@ -172,7 +174,7 @@ Eloquent::ExtensionFactory* Eloquent::Application::LoadExtension( const boost::f
 			
 			if( !AttachSymbol ) {
 				std::unique_lock<std::mutex> LogLock( m_LogMutex );
-				m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - not attach symbol at " << ExtensionPath.string() << std::endl;
+				m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - no attach symbol at " << ExtensionPath.string() << std::endl;
 			} else {
 				{
 					std::unique_lock<std::mutex> LogLock( m_LogMutex );
@@ -237,7 +239,7 @@ int Eloquent::Application::Run() {
 		for( boost::property_tree::ptree::iterator ConfigTree_it = ConfigTree.begin(); ConfigTree_it != ConfigTree.end(); ++ConfigTree_it  ) {
 			boost::property_tree::ptree ConfigRoot = (*ConfigTree_it).second;
 			
-			m_Queue.push( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
+			m_Queues.push_back( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
 			
 			for( boost::property_tree::ptree::iterator ConfigRoot_it = ConfigRoot.begin(); ConfigRoot_it != ConfigRoot.end(); ++ConfigRoot_it ) {
 				boost::property_tree::ptree::value_type ConfigNode = *ConfigRoot_it;
@@ -255,13 +257,13 @@ int Eloquent::Application::Run() {
 							IOExtension* MyExtension = reinterpret_cast<IOExtensionFactory*>( MyExtensionFactory )->New( ConfigNode
 																				 , m_LogMutex
 																				 , m_Log
-																				 , *std::get<0>( m_Queue.back() )
-																				 , *std::get<1>( m_Queue.back() )
-																				 , *std::get<2>( m_Queue.back() )
-																				 , std::get<3>( m_Queue.back() ) );
+																				 , *std::get<0>( m_Queues.back() )
+																				 , *std::get<1>( m_Queues.back() )
+																				 , *std::get<2>( m_Queues.back() )
+																				 , std::get<3>( m_Queues.back() ) );
 							
-							if ( ConfigNode.first == "write" ) {
-								++std::get<3>( m_Queue.back() );
+							if( ConfigNode.first == "write" ) {
+								++std::get<3>( m_Queues.back() );
 							}
 							
 							ThreadGroup.push_back( std::thread( std::ref( *MyExtension ) ) );
@@ -276,8 +278,8 @@ int Eloquent::Application::Run() {
 			
 		}
 		
-		for( auto& thread: ThreadGroup )
-			thread.join();
+		for( std::thread& Thread: ThreadGroup )
+			Thread.join();
 		
 		return 0;
 
