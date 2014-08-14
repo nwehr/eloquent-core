@@ -116,8 +116,13 @@ install( TARGETS ${target_exe} DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin )
 ##############################################################################
 # Install - Configurations
 ##############################################################################
-install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
-install( FILES "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+	install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+endif()
+
+if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+	install( FILES "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
+endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
 	install( FILES "${PROJECT_SOURCE_DIR}/Config/com.evrichart.eloquentd.plist" DESTINATION "/Library/LaunchDaemons" )
