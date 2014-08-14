@@ -118,11 +118,6 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 		m_Log.add_stream( &std::cout );
 		m_Log.add_stream( new std::ofstream( m_LogPathString.c_str(), std::ios_base::out ), true );
 
-		{
-			std::unique_lock<std::mutex> LogLock( m_LogMutex );
-			m_Log( LogSeverity::SEV_INFO ) << "Application::Application() - info - setting up application" << std::endl;
-		}
-
 		return *this;
 		
 	} catch( boost::program_options::error& e ) {
@@ -133,7 +128,7 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 		m_Log( LogSeverity::SEV_ERROR ) << "Application::Application() - error - " << e.what() << std::endl;
 	}
 
-	throw std::runtime_error( "Applicatoin::Init() not returning" ); 
+	throw std::runtime_error( "Application::Init() not returning" ); 
 
 }
 
@@ -200,7 +195,7 @@ Eloquent::ExtensionFactory* Eloquent::Application::LoadExtension( const boost::f
 		m_Log( LogSeverity::SEV_ERROR ) << "Application::LoadExtension() - error - " << e.what() << std::endl;
 	}
 
-	throw std::runtime_error( "Applicatoin::LoadExtension() not returning" ); 
+	throw std::runtime_error( "Application::LoadExtension() not returning" ); 
 	
 }
 
@@ -288,6 +283,6 @@ int Eloquent::Application::Run() {
 		m_Log( LogSeverity::SEV_ERROR ) << "Application::Run() - error - " << e.what() << std::endl;
 	}
 	
-	throw std::runtime_error( "Applicatoin::Run() not returning" ); 
+	throw std::runtime_error( "Application::Run() not returning" ); 
 
 }
