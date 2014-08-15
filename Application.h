@@ -28,8 +28,8 @@
 
 namespace Eloquent {
 	static const std::string APP_NAME		= "eloquentd";
-	static const std::string APP_VERSION	= "1.0";
-	static const std::string APP_RELEASE	= "BETA";
+	static const std::string APP_VERSION	= "1.0.0_0";
+	static const std::string APP_RELEASE	= "RELEASE";
 	
 	static const std::string CONFIG_PATH		= "/usr/local/etc/eloquent/eloquent.conf";
 	static const std::string EXT_CONFIG_PATH 	= "/usr/local/etc/eloquent/extensions.conf";
