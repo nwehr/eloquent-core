@@ -95,7 +95,6 @@ Eloquent::QueueItem& Eloquent::IOExtension::NextQueueItem() {
 		
 	}
 	
-	std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 	return m_Queue.front();
 	
 }
