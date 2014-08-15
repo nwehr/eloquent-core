@@ -20,15 +20,13 @@
 
 // Internal
 #include "Extensions/IOExtension.h"
-#include "Extensions/IOExtensionFactory.h"
-
 #include "Extensions/FilterExtension.h"
-#include "Extensions/FilterExtensionFactory.h"
 
-#include "Global/Logging.h"
+#include "Extensions/Factories/IOExtensionFactory.h"
+#include "Extensions/Factories/FilterExtensionFactory.h"
 
+#include "Logging.h"
 #include "Application.h"
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Application

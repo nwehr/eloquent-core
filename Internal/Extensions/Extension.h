@@ -10,7 +10,6 @@
 #include <mutex>
 
 // Boost
-#include <boost/thread.hpp>
 #include <boost/property_tree/ptree.hpp>
 
 // External

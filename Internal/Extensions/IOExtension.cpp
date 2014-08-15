@@ -8,7 +8,6 @@
 
 // Internal
 #include "IOExtension.h"
-#include "Coordinators/FilterCoordinator.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // IOExtension : Extension
@@ -57,9 +56,9 @@ std::vector<boost::optional<std::string>>& Eloquent::IOExtension::IfOrigin() {
 void Eloquent::IOExtension::PopQueueItem() {
 	std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 	
-	m_Queue.front().Access()[this] = true;
+	m_Queue.front().Accessed()[this] = true;
 	
-	if( m_Queue.front().Access().size() == m_NumWriters ) {
+	if( m_Queue.front().Accessed().size() == m_NumWriters ) {
 		m_Queue.pop();
 	}
 	
@@ -72,7 +71,7 @@ Eloquent::QueueItem& Eloquent::IOExtension::NextQueueItem() {
 		{
 			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 			
-			while( !m_Queue.size() || m_Queue.front().Access()[this] ) {
+			while( !m_Queue.size() || m_Queue.front().Accessed()[this] ) {
 				m_QueueCV.wait( QueueLock );
 			}
 			

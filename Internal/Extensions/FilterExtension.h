@@ -15,7 +15,7 @@
 #include <boost/iostreams/filter/regex.hpp>
 
 // Internal
-#include "Extension.h"
+#include "Extensions/Extension.h"
 
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////

@@ -41,11 +41,10 @@ link_directories( "/usr/local/lib" )
 # Build - Library
 ##############################################################################
 file( GLOB lib_src
-	"${PROJECT_SOURCE_DIR}/Internal/Utility/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Global/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/Sink.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/*.cpp"
 	"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.cpp"
 )
 
 set( lib_lib
@@ -73,6 +72,7 @@ set( exe_lib
 	${Boost_FILESYSTEM_LIBRARY}
 	streamlog
 	dl
+	Eloquent
 )
 
 add_executable( ${target_exe} ${exe_src} )
@@ -81,26 +81,14 @@ target_link_libraries( ${target_exe} ${exe_lib} )
 ##############################################################################
 # Install - Library
 ##############################################################################
-set( Coordinator_headers "${PROJECT_SOURCE_DIR}/Internal/Coordinators/FilterCoordinator.h" )
-
-set( Extension_headers
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Extension.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/ExtensionFactory.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/FilterExtension.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/FilterExtensionFactory.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/IOExtension.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/IOExtensionFactory.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/QueueItem.h"
+file( GLOB headers
+	"${PROJECT_SOURCE_DIR}/Internal/*.h"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.h"
+	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.h"
 )
 
-set( Filter_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/Sink.h" )
-
-set( Global_headers "${PROJECT_SOURCE_DIR}/Internal/Global/Logging.h" )
-
-install( FILES ${Coordinator_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Coordinators" )
-install( FILES ${Extension_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions" )
-install( FILES ${Filter_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Filters" )
-install( FILES ${Global_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Global" )
+install( FILES ${headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set_target_properties( ${target_lib} PROPERTIES MACOSX_RPATH 1 )

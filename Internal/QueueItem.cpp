@@ -14,7 +14,11 @@ Eloquent::QueueItem::QueueItem( const std::string& i_Data, const std::string& i_
 {}
 
 std::map<void*,bool>& Eloquent::QueueItem::Access() {
-	return m_Access;
+	return m_Accessed;
+}
+
+std::map<void*,bool>& Eloquent::QueueItem::Accessed() {
+	return m_Accessed; 
 }
 
 std::string& Eloquent::QueueItem::Data() {

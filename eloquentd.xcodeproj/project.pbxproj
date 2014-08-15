@@ -8,19 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		5827E437199D3A22006451E4 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3CD199D3A22006451E4 /* Application.cpp */; };
-		5827E447199D3A22006451E4 /* FilterCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E418199D3A22006451E4 /* FilterCoordinator.cpp */; };
-		5827E448199D3A22006451E4 /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E41B199D3A22006451E4 /* Extension.cpp */; };
-		5827E449199D3A22006451E4 /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E41D199D3A22006451E4 /* ExtensionFactory.cpp */; };
-		5827E44A199D3A22006451E4 /* FilterExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E41F199D3A22006451E4 /* FilterExtension.cpp */; };
-		5827E44B199D3A22006451E4 /* FilterExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E421199D3A22006451E4 /* FilterExtensionFactory.cpp */; };
-		5827E44C199D3A22006451E4 /* RegexFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E424199D3A22006451E4 /* RegexFilter.cpp */; };
-		5827E44D199D3A22006451E4 /* RegexFilterAttach.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E426199D3A22006451E4 /* RegexFilterAttach.cpp */; };
-		5827E44E199D3A22006451E4 /* RegexFilterFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E428199D3A22006451E4 /* RegexFilterFactory.cpp */; };
-		5827E44F199D3A22006451E4 /* Sink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E42A199D3A22006451E4 /* Sink.cpp */; };
-		5827E450199D3A22006451E4 /* IOExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E42C199D3A22006451E4 /* IOExtension.cpp */; };
-		5827E451199D3A22006451E4 /* IOExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E42E199D3A22006451E4 /* IOExtensionFactory.cpp */; };
-		5827E452199D3A22006451E4 /* QueueItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E430199D3A22006451E4 /* QueueItem.cpp */; };
 		5827E453199D3A22006451E4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E435199D3A22006451E4 /* main.cpp */; };
+		5827E471199E3549006451E4 /* FilterCoordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E45C199E3549006451E4 /* FilterCoordinator.cpp */; };
+		5827E472199E3549006451E4 /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E45F199E3549006451E4 /* Extension.cpp */; };
+		5827E473199E3549006451E4 /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E462199E3549006451E4 /* ExtensionFactory.cpp */; };
+		5827E474199E3549006451E4 /* FilterExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E464199E3549006451E4 /* FilterExtensionFactory.cpp */; };
+		5827E475199E3549006451E4 /* IOExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E466199E3549006451E4 /* IOExtensionFactory.cpp */; };
+		5827E476199E3549006451E4 /* FilterExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E468199E3549006451E4 /* FilterExtension.cpp */; };
+		5827E477199E3549006451E4 /* IOExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E46A199E3549006451E4 /* IOExtension.cpp */; };
+		5827E478199E3549006451E4 /* Sink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E46C199E3549006451E4 /* Sink.cpp */; };
+		5827E479199E3549006451E4 /* QueueItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E46F199E3549006451E4 /* QueueItem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,34 +43,28 @@
 		5827E413199D3A22006451E4 /* eloquentd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd; sourceTree = "<group>"; };
 		5827E414199D3A22006451E4 /* eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd.conf; sourceTree = "<group>"; };
 		5827E415199D3A22006451E4 /* extensions.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = extensions.conf; sourceTree = "<group>"; };
-		5827E418199D3A22006451E4 /* FilterCoordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterCoordinator.cpp; sourceTree = "<group>"; };
-		5827E419199D3A22006451E4 /* FilterCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCoordinator.h; sourceTree = "<group>"; };
-		5827E41B199D3A22006451E4 /* Extension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Extension.cpp; sourceTree = "<group>"; };
-		5827E41C199D3A22006451E4 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
-		5827E41D199D3A22006451E4 /* ExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionFactory.cpp; sourceTree = "<group>"; };
-		5827E41E199D3A22006451E4 /* ExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionFactory.h; sourceTree = "<group>"; };
-		5827E41F199D3A22006451E4 /* FilterExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterExtension.cpp; sourceTree = "<group>"; };
-		5827E420199D3A22006451E4 /* FilterExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterExtension.h; sourceTree = "<group>"; };
-		5827E421199D3A22006451E4 /* FilterExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterExtensionFactory.cpp; sourceTree = "<group>"; };
-		5827E422199D3A22006451E4 /* FilterExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterExtensionFactory.h; sourceTree = "<group>"; };
-		5827E424199D3A22006451E4 /* RegexFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegexFilter.cpp; sourceTree = "<group>"; };
-		5827E425199D3A22006451E4 /* RegexFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexFilter.h; sourceTree = "<group>"; };
-		5827E426199D3A22006451E4 /* RegexFilterAttach.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegexFilterAttach.cpp; sourceTree = "<group>"; };
-		5827E427199D3A22006451E4 /* RegexFilterAttach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexFilterAttach.h; sourceTree = "<group>"; };
-		5827E428199D3A22006451E4 /* RegexFilterFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegexFilterFactory.cpp; sourceTree = "<group>"; };
-		5827E429199D3A22006451E4 /* RegexFilterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexFilterFactory.h; sourceTree = "<group>"; };
-		5827E42A199D3A22006451E4 /* Sink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sink.cpp; sourceTree = "<group>"; };
-		5827E42B199D3A22006451E4 /* Sink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sink.h; sourceTree = "<group>"; };
-		5827E42C199D3A22006451E4 /* IOExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOExtension.cpp; sourceTree = "<group>"; };
-		5827E42D199D3A22006451E4 /* IOExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOExtension.h; sourceTree = "<group>"; };
-		5827E42E199D3A22006451E4 /* IOExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOExtensionFactory.cpp; sourceTree = "<group>"; };
-		5827E42F199D3A22006451E4 /* IOExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOExtensionFactory.h; sourceTree = "<group>"; };
-		5827E430199D3A22006451E4 /* QueueItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueueItem.cpp; sourceTree = "<group>"; };
-		5827E431199D3A22006451E4 /* QueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueItem.h; sourceTree = "<group>"; };
-		5827E433199D3A22006451E4 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		5827E434199D3A22006451E4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		5827E435199D3A22006451E4 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5827E436199D3A22006451E4 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		5827E45C199E3549006451E4 /* FilterCoordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterCoordinator.cpp; sourceTree = "<group>"; };
+		5827E45D199E3549006451E4 /* FilterCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCoordinator.h; sourceTree = "<group>"; };
+		5827E45F199E3549006451E4 /* Extension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Extension.cpp; sourceTree = "<group>"; };
+		5827E460199E3549006451E4 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
+		5827E462199E3549006451E4 /* ExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionFactory.cpp; sourceTree = "<group>"; };
+		5827E463199E3549006451E4 /* ExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionFactory.h; sourceTree = "<group>"; };
+		5827E464199E3549006451E4 /* FilterExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterExtensionFactory.cpp; sourceTree = "<group>"; };
+		5827E465199E3549006451E4 /* FilterExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterExtensionFactory.h; sourceTree = "<group>"; };
+		5827E466199E3549006451E4 /* IOExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOExtensionFactory.cpp; sourceTree = "<group>"; };
+		5827E467199E3549006451E4 /* IOExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOExtensionFactory.h; sourceTree = "<group>"; };
+		5827E468199E3549006451E4 /* FilterExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterExtension.cpp; sourceTree = "<group>"; };
+		5827E469199E3549006451E4 /* FilterExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterExtension.h; sourceTree = "<group>"; };
+		5827E46A199E3549006451E4 /* IOExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOExtension.cpp; sourceTree = "<group>"; };
+		5827E46B199E3549006451E4 /* IOExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOExtension.h; sourceTree = "<group>"; };
+		5827E46C199E3549006451E4 /* Sink.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sink.cpp; sourceTree = "<group>"; };
+		5827E46D199E3549006451E4 /* Sink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sink.h; sourceTree = "<group>"; };
+		5827E46E199E3549006451E4 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		5827E46F199E3549006451E4 /* QueueItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueueItem.cpp; sourceTree = "<group>"; };
+		5827E470199E3549006451E4 /* QueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueItem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				5827E40F199D3A22006451E4 /* Config */,
-				5827E416199D3A22006451E4 /* Internal */,
+				5827E45A199E3549006451E4 /* Internal */,
 				5827E3CD199D3A22006451E4 /* Application.cpp */,
 				5827E3CE199D3A22006451E4 /* Application.h */,
 				5827E435199D3A22006451E4 /* main.cpp */,
@@ -131,68 +122,54 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		5827E416199D3A22006451E4 /* Internal */ = {
+		5827E45A199E3549006451E4 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				5827E417199D3A22006451E4 /* Coordinators */,
-				5827E41A199D3A22006451E4 /* Extensions */,
-				5827E432199D3A22006451E4 /* Global */,
+				5827E45B199E3549006451E4 /* Coordinators */,
+				5827E45E199E3549006451E4 /* Extensions */,
+				5827E46E199E3549006451E4 /* Logging.h */,
+				5827E46F199E3549006451E4 /* QueueItem.cpp */,
+				5827E470199E3549006451E4 /* QueueItem.h */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		5827E417199D3A22006451E4 /* Coordinators */ = {
+		5827E45B199E3549006451E4 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				5827E418199D3A22006451E4 /* FilterCoordinator.cpp */,
-				5827E419199D3A22006451E4 /* FilterCoordinator.h */,
+				5827E45C199E3549006451E4 /* FilterCoordinator.cpp */,
+				5827E45D199E3549006451E4 /* FilterCoordinator.h */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		5827E41A199D3A22006451E4 /* Extensions */ = {
+		5827E45E199E3549006451E4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5827E41B199D3A22006451E4 /* Extension.cpp */,
-				5827E41C199D3A22006451E4 /* Extension.h */,
-				5827E41D199D3A22006451E4 /* ExtensionFactory.cpp */,
-				5827E41E199D3A22006451E4 /* ExtensionFactory.h */,
-				5827E41F199D3A22006451E4 /* FilterExtension.cpp */,
-				5827E420199D3A22006451E4 /* FilterExtension.h */,
-				5827E421199D3A22006451E4 /* FilterExtensionFactory.cpp */,
-				5827E422199D3A22006451E4 /* FilterExtensionFactory.h */,
-				5827E423199D3A22006451E4 /* Filters */,
-				5827E42C199D3A22006451E4 /* IOExtension.cpp */,
-				5827E42D199D3A22006451E4 /* IOExtension.h */,
-				5827E42E199D3A22006451E4 /* IOExtensionFactory.cpp */,
-				5827E42F199D3A22006451E4 /* IOExtensionFactory.h */,
-				5827E430199D3A22006451E4 /* QueueItem.cpp */,
-				5827E431199D3A22006451E4 /* QueueItem.h */,
+				5827E45F199E3549006451E4 /* Extension.cpp */,
+				5827E460199E3549006451E4 /* Extension.h */,
+				5827E461199E3549006451E4 /* Factories */,
+				5827E468199E3549006451E4 /* FilterExtension.cpp */,
+				5827E469199E3549006451E4 /* FilterExtension.h */,
+				5827E46A199E3549006451E4 /* IOExtension.cpp */,
+				5827E46B199E3549006451E4 /* IOExtension.h */,
+				5827E46C199E3549006451E4 /* Sink.cpp */,
+				5827E46D199E3549006451E4 /* Sink.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		5827E423199D3A22006451E4 /* Filters */ = {
+		5827E461199E3549006451E4 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
-				5827E424199D3A22006451E4 /* RegexFilter.cpp */,
-				5827E425199D3A22006451E4 /* RegexFilter.h */,
-				5827E426199D3A22006451E4 /* RegexFilterAttach.cpp */,
-				5827E427199D3A22006451E4 /* RegexFilterAttach.h */,
-				5827E428199D3A22006451E4 /* RegexFilterFactory.cpp */,
-				5827E429199D3A22006451E4 /* RegexFilterFactory.h */,
-				5827E42A199D3A22006451E4 /* Sink.cpp */,
-				5827E42B199D3A22006451E4 /* Sink.h */,
+				5827E462199E3549006451E4 /* ExtensionFactory.cpp */,
+				5827E463199E3549006451E4 /* ExtensionFactory.h */,
+				5827E464199E3549006451E4 /* FilterExtensionFactory.cpp */,
+				5827E465199E3549006451E4 /* FilterExtensionFactory.h */,
+				5827E466199E3549006451E4 /* IOExtensionFactory.cpp */,
+				5827E467199E3549006451E4 /* IOExtensionFactory.h */,
 			);
-			path = Filters;
-			sourceTree = "<group>";
-		};
-		5827E432199D3A22006451E4 /* Global */ = {
-			isa = PBXGroup;
-			children = (
-				5827E433199D3A22006451E4 /* Logging.h */,
-			);
-			path = Global;
+			path = Factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,20 +228,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5827E44D199D3A22006451E4 /* RegexFilterAttach.cpp in Sources */,
-				5827E452199D3A22006451E4 /* QueueItem.cpp in Sources */,
 				5827E437199D3A22006451E4 /* Application.cpp in Sources */,
+				5827E471199E3549006451E4 /* FilterCoordinator.cpp in Sources */,
+				5827E477199E3549006451E4 /* IOExtension.cpp in Sources */,
+				5827E473199E3549006451E4 /* ExtensionFactory.cpp in Sources */,
+				5827E478199E3549006451E4 /* Sink.cpp in Sources */,
 				5827E453199D3A22006451E4 /* main.cpp in Sources */,
-				5827E451199D3A22006451E4 /* IOExtensionFactory.cpp in Sources */,
-				5827E44E199D3A22006451E4 /* RegexFilterFactory.cpp in Sources */,
-				5827E449199D3A22006451E4 /* ExtensionFactory.cpp in Sources */,
-				5827E44B199D3A22006451E4 /* FilterExtensionFactory.cpp in Sources */,
-				5827E448199D3A22006451E4 /* Extension.cpp in Sources */,
-				5827E447199D3A22006451E4 /* FilterCoordinator.cpp in Sources */,
-				5827E44F199D3A22006451E4 /* Sink.cpp in Sources */,
-				5827E450199D3A22006451E4 /* IOExtension.cpp in Sources */,
-				5827E44A199D3A22006451E4 /* FilterExtension.cpp in Sources */,
-				5827E44C199D3A22006451E4 /* RegexFilter.cpp in Sources */,
+				5827E479199E3549006451E4 /* QueueItem.cpp in Sources */,
+				5827E474199E3549006451E4 /* FilterExtensionFactory.cpp in Sources */,
+				5827E472199E3549006451E4 /* Extension.cpp in Sources */,
+				5827E475199E3549006451E4 /* IOExtensionFactory.cpp in Sources */,
+				5827E476199E3549006451E4 /* FilterExtension.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

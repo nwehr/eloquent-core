@@ -13,9 +13,8 @@
 
 // Internal
 #include "Extensions/Extension.h"
-#include "Extensions/QueueItem.h"
-
 #include "Coordinators/FilterCoordinator.h"
+#include "QueueItem.h"
 
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////

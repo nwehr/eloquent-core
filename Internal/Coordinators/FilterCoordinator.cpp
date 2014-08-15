@@ -15,14 +15,12 @@
 #include <boost/regex.hpp>
 
 // Internal
-#include "Extensions/Filters/Sink.h"
+#include "Extensions/Sink.h"
 
 #include "Extensions/FilterExtension.h"
-#include "Extensions/FilterExtensionFactory.h"
+#include "Extensions/Factories/FilterExtensionFactory.h"
 
 #include "FilterCoordinator.h"
-
-#include "Application.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // FilterCoordinator

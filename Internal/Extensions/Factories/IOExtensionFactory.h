@@ -8,15 +8,13 @@
 
 // Boost
 #include <boost/property_tree/ptree.hpp>
-#include <boost/smart_ptr.hpp>
-#include <boost/thread.hpp>
 
 // External
 #include <streamlog/streamlog.h>
 
 // Internal
 #include "Extensions/IOExtension.h"
-#include "Extensions/ExtensionFactory.h"
+#include "Extensions/Factories/ExtensionFactory.h"
 
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////

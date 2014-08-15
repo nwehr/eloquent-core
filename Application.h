@@ -16,8 +16,6 @@
 
 // Boost
 #include <boost/filesystem.hpp>
-#include <boost/thread.hpp>
-#include <boost/smart_ptr.hpp>
 #include <boost/property_tree/ptree.hpp>
 
 // External
@@ -25,8 +23,8 @@
 
 // Internal
 #include "Extensions/Extension.h"
-#include "Extensions/ExtensionFactory.h"
-#include "Extensions/QueueItem.h"
+#include "Extensions/Factories/ExtensionFactory.h"
+#include "QueueItem.h"
 
 namespace Eloquent {
 	static const std::string APP_NAME		= "eloquentd";
@@ -69,7 +67,7 @@ namespace Eloquent {
 		// Extensions
 		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
 		
-		// Queue
+		// Queues
 		std::deque<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queues;
 
 	public:
