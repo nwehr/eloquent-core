@@ -43,7 +43,7 @@ link_directories( "/usr/local/lib" )
 file( GLOB lib_src
 	"${PROJECT_SOURCE_DIR}/Internal/*.cpp"
 	"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.cpp"
 	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.cpp"
 )
 
@@ -81,14 +81,15 @@ target_link_libraries( ${target_exe} ${exe_lib} )
 ##############################################################################
 # Install - Library
 ##############################################################################
-file( GLOB headers
-	"${PROJECT_SOURCE_DIR}/Internal/*.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.h"
-	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.h"
-)
+file( GLOB main_headers "${PROJECT_SOURCE_DIR}/Internal/*.h" )
+file( GLOB extension_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h" )
+file( GLOB factory_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.h" )
+file( GLOB coordinator_headers "${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.h" )
 
-install( FILES ${headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
+install( FILES ${main_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
+install( FILES ${extension_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions" )
+install( FILES ${factory_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Factories" )
+install( FILES ${coordinator_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Coordinators" )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set_target_properties( ${target_lib} PROPERTIES MACOSX_RPATH 1 )
