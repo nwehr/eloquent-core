@@ -65,6 +65,7 @@
 		5827E46E199E3549006451E4 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		5827E46F199E3549006451E4 /* QueueItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueueItem.cpp; sourceTree = "<group>"; };
 		5827E470199E3549006451E4 /* QueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueItem.h; sourceTree = "<group>"; };
+		5827E47A199E8E15006451E4 /* Attach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attach.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +131,7 @@
 				5827E46E199E3549006451E4 /* Logging.h */,
 				5827E46F199E3549006451E4 /* QueueItem.cpp */,
 				5827E470199E3549006451E4 /* QueueItem.h */,
+				5827E47A199E8E15006451E4 /* Attach.h */,
 			);
 			path = Internal;
 			sourceTree = "<group>";

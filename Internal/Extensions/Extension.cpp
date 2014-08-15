@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Extension
 ///////////////////////////////////////////////////////////////////////////////
-Eloquent::Extension::Extension(	 const  boost::property_tree::ptree::value_type& i_Config
+Eloquent::Extension::Extension(	 const boost::property_tree::ptree::value_type& i_Config
 				   				, std::mutex& i_LogMutex
 				   				, streamlog::severity_log& i_Log )
 : m_Config( i_Config )

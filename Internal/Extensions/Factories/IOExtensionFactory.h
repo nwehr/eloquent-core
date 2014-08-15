@@ -22,12 +22,7 @@ namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
 	class IOExtensionFactory : public ExtensionFactory {
 	public:
-		explicit IOExtensionFactory( const std::string& i_Name
-					  				, const std::string& i_Version
-					  				, const std::string& i_Author
-					  				, const std::string& i_Type
-					  				, const std::vector<std::string>& i_Keys );
-		
+		IOExtensionFactory();
 		virtual ~IOExtensionFactory();
 		
 		virtual IOExtension* New( const boost::property_tree::ptree::value_type& i_ConfigNode
