@@ -6,26 +6,20 @@
 // See LICENSE.txt
 //
 
-// Boost
-#include <boost/property_tree/ptree.hpp>
-
-// External
-#include <streamlog/streamlog.h>
-
 // Internal
-#include "Extensions/FilterExtension.h"
-#include "Extensions/Factories/ExtensionFactory.h"
+#include "Extensions/ExtensionFactory.h"
+#include "Extensions/Filters/Filter.h"
 
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
-	// FilterExtensionFactory : ExtensionFactory
+	// FilterFactory : ExtensionFactory
 	///////////////////////////////////////////////////////////////////////////////
-	class FilterExtensionFactory : public ExtensionFactory {
+	class FilterFactory : public ExtensionFactory {
 	public:
-		FilterExtensionFactory();
-		virtual ~FilterExtensionFactory();
+		FilterFactory();
+		virtual ~FilterFactory();
 		
-		virtual FilterExtension* New( const boost::property_tree::ptree::value_type& i_ConfigNode
+		virtual Filter* New( const boost::property_tree::ptree::value_type& i_ConfigNode
 									 , std::mutex& i_LogMutex
 									 , streamlog::severity_log& i_Log ) = 0;
 		

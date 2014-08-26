@@ -23,7 +23,13 @@
 
 // Internal
 #include "Extensions/Extension.h"
-#include "Extensions/Factories/ExtensionFactory.h"
+#include "Extensions/ExtensionFactory.h"
+
+#include "Extensions/Filters/Filter.h"
+#include "Extensions/Filters/FilterFactory.h"
+
+#include "Extensions/ExtensionManager.h"
+
 #include "QueueItem.h"
 
 namespace Eloquent {
@@ -31,9 +37,8 @@ namespace Eloquent {
 	static const std::string APP_VERSION	= "1.0.0_0";
 	static const std::string APP_RELEASE	= "RELEASE";
 	
-	static const std::string CONFIG_PATH		= "/usr/local/etc/eloquent/eloquent.conf";
-	static const std::string EXT_CONFIG_PATH 	= "/usr/local/etc/eloquent/extensions.conf";
-	static const std::string LOG_PATH			= "/var/log/eloquent.log";
+	static const std::string CONFIG_PATH	= "/usr/local/etc/eloquent/eloquent.conf";
+	static const std::string LOG_PATH		= "/var/log/eloquent.log";
 	
 	///////////////////////////////////////////////////////////////////////////////
 	// Application
@@ -48,26 +53,21 @@ namespace Eloquent {
 		
 		Application& Init( int argc, const char* argv[] );
 		
-		ExtensionFactory* LoadExtension( const boost::filesystem::path& );
 		int Run();
 
 		static Application& Instance();
 		
 	private:
 		// Arguement Options
-		int 					m_LogLevel;
+		int m_LogLevel;
 		boost::filesystem::path m_LogPath;
 		boost::filesystem::path m_ConfigPath;
-		boost::filesystem::path m_ExtConfigPath;
 		
 		// Logging
-		std::mutex 				m_LogMutex;
+		std::mutex m_LogMutex;
 		streamlog::severity_log m_Log;
 		
-		// Extensions
-		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
-		
-		// Queues
+		// Queues and Filters
 		std::deque<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queues;
 
 	public:

@@ -43,8 +43,8 @@ link_directories( "/usr/local/lib" )
 file( GLOB lib_src
 	"${PROJECT_SOURCE_DIR}/Internal/*.cpp"
 	"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.cpp"
-	"${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/IO/*.cpp"
+	"${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/*.cpp"
 )
 
 set( lib_lib
@@ -67,7 +67,6 @@ file( GLOB exe_src
 
 set( exe_lib
 	${Boost_SYSTEM_LIBRARY}
-	${Boost_REGEX_LIBRARY}
 	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
 	streamlog
@@ -83,13 +82,13 @@ target_link_libraries( ${target_exe} ${exe_lib} )
 ##############################################################################
 file( GLOB main_headers "${PROJECT_SOURCE_DIR}/Internal/*.h" )
 file( GLOB extension_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h" )
-file( GLOB factory_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/Factories/*.h" )
-file( GLOB coordinator_headers "${PROJECT_SOURCE_DIR}/Internal/Coordinators/*.h" )
+file( GLOB filter_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/*.h" )
+file( GLOB io_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/IO/*.h" )
 
 install( FILES ${main_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
 install( FILES ${extension_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions" )
-install( FILES ${factory_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Factories" )
-install( FILES ${coordinator_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Coordinators" )
+install( FILES ${filter_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Filters" )
+install( FILES ${io_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/IO" )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set_target_properties( ${target_lib} PROPERTIES MACOSX_RPATH 1 )
@@ -105,12 +104,8 @@ install( TARGETS ${target_exe} DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin )
 ##############################################################################
 # Install - Configurations
 ##############################################################################
-if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" )
+if( NOT EXISTS "${CMAKE_INSTALL_PREFIX}/etc/eloquent/eloquent.conf" )
 	install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquent.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
-endif()
-
-if( NOT EXISTS "${PROJECT_SOURCE_DIR}/Config/extensions.conf" )
-	install( FILES "${PROJECT_SOURCE_DIR}/Config/extensions.conf" DESTINATION "${CMAKE_INSTALL_PREFIX}/etc/eloquent" )
 endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )

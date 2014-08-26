@@ -4,10 +4,10 @@
 //
 
 // Internal
-#include "IOExtensionFactory.h"
+#include "IOFactory.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // IOExtensionFactory : ExtensionFactory
 ///////////////////////////////////////////////////////////////////////////////
-Eloquent::IOExtensionFactory::IOExtensionFactory() {}
-Eloquent::IOExtensionFactory::~IOExtensionFactory() {}
+Eloquent::IOFactory::IOFactory()  {}
+Eloquent::IOFactory::~IOFactory() {}

@@ -1,9 +1,6 @@
 //
-//  QueueItem.cpp
-//  eloquent
-//
-//  Created by Nathan Wehr on 8/12/14.
-//  Copyright (c) 2014 Creltek. All rights reserved.
+// Copyright 2013-2014 EvriChart, Inc. All Rights Reserved.
+// See LICENSE.txt
 //
 
 #include "QueueItem.h"

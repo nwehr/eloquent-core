@@ -6,8 +6,12 @@
 // See LICENSE.txt
 //
 
+// C
+#include <unistd.h>
+
 // C++
 #include <string>
+#include <ctime>
 
 namespace Eloquent {
 	namespace LogSeverity {
@@ -18,6 +22,11 @@ namespace Eloquent {
 		static const int SEV_ERROR		= 0x4;
 		static const int SEV_FATAL		= 0x5;
 	}
+	
+	static std::string Hostname = "";
+	static int ProcessID = 0;
+	
+	std::string TimeAndSpace();
 
 }
 

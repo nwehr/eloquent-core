@@ -1,13 +1,10 @@
-//
-//  QueueItem.h
-//  eloquent
-//
-//  Created by Nathan Wehr on 8/12/14.
-//  Copyright (c) 2014 Creltek. All rights reserved.
-//
-
 #ifndef __eloquent__QueueItem__
 #define __eloquent__QueueItem__
+
+//
+// Copyright 2013-2014 EvriChart, Inc. All Rights Reserved.
+// See LICENSE.txt
+//
 
 // C++
 #include <string>
