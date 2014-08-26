@@ -13,6 +13,8 @@
 #include <deque>
 #include <tuple>
 #include <string>
+#include <thread>
+#include <mutex>
 
 // Boost
 #include <boost/filesystem.hpp>

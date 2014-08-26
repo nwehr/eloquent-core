@@ -5,10 +5,14 @@ cmake_minimum_required( VERSION 2.8 )
 
 project( eloquentd )
 
-ADD_DEFINITIONS( -std=c++11 )
-
 set( target_exe eloquentd )
 set( target_lib Eloquent )
+
+SET (CMAKE_CXX_FLAGS                "-Wall -std=c++11")
+SET (CMAKE_CXX_FLAGS_DEBUG          "-g")
+SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 
 ##############################################################################
 # Header Search Paths
@@ -53,6 +57,7 @@ set( lib_lib
 	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
 	streamlog
+	dl
 )
 
 add_library( ${target_lib} SHARED ${lib_src} )
