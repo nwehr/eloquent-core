@@ -13,7 +13,7 @@ int main( int argc, const char* argv[] ) {
 	try {
 		return Eloquent::Application::Instance().Init( argc, argv ).Run();	
 	} catch( std::exception& e ) {
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	
 }

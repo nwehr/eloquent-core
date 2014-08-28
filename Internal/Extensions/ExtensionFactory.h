@@ -6,10 +6,6 @@
 // See LICENSE.txt
 //
 
-// C++
-#include <string>
-#include <vector>
-
 namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
 	// ExtensionFactory

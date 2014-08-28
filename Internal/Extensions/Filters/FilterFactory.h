@@ -18,10 +18,7 @@ namespace Eloquent {
 	public:
 		FilterFactory();
 		virtual ~FilterFactory();
-		
-		virtual Filter* New( const boost::property_tree::ptree::value_type& i_ConfigNode
-									 , std::mutex& i_LogMutex
-									 , streamlog::severity_log& i_Log ) = 0;
+		virtual Filter* New( const boost::property_tree::ptree::value_type& i_ConfigNode ) = 0;
 		
 	};
 	

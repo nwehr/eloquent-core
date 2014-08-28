@@ -11,8 +11,6 @@
 
 // Boost
 #include <boost/property_tree/info_parser.hpp>
-
-#include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
 
 // Internal
@@ -22,18 +20,17 @@
 #include "Extensions/Filters/Filter.h"
 #include "Extensions/Filters/FilterFactory.h"
 
-#include "Logging.h"
 #include "Application.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Application
 ///////////////////////////////////////////////////////////////////////////////
 Eloquent::Application::Application()
-: m_LogLevel( LogSeverity::SEV_WARNING )
-, m_LogPath( LOG_PATH )
+: m_LogLevel( LOG_WARNING )
 , m_ConfigPath( CONFIG_PATH )
-, m_Log()
-{}
+{
+	openlog( NULL, LOG_CONS | LOG_NDELAY | LOG_PID, LOG_LOCAL7 );
+}
 
 Eloquent::Application* Eloquent::Application::m_Application;
 
@@ -49,12 +46,11 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 		boost::program_options::options_description OptionsDescription( "Options" );
 		
 		OptionsDescription.add_options()
-			("help,h"			, "Displays options")
-			("version,v"		, "Displays version")
-			("log,l"			, boost::program_options::value<std::string>(), "Set path to log file")
-			("log-level,s"		, boost::program_options::value<std::string>(), "Set log severity level\n[ trace | debug | info | warning | error | fatal ]")
-			("config,c"			, boost::program_options::value<std::string>(), "Set path to eloquent config file")
-			;
+		("help,h"			, "Displays options")
+		("version,v"		, "Displays version")
+		("log-level,s"		, boost::program_options::value<std::string>(), "Set log severity level\n[ debug | info | warning | error | fatal ]")
+		("config,c"			, boost::program_options::value<std::string>(), "Set path to eloquent config file")
+		;
 
 		boost::program_options::variables_map VariableMap;
 
@@ -73,46 +69,42 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 		}
 
 		if ( VariableMap.count( "log-level" ) ) {
-			if( VariableMap["log-level"].as<std::string>() == "trace" ) {
-				m_LogLevel = LogSeverity::SEV_TRACE;
-			} else if( VariableMap["log-level"].as<std::string>() == "debug" ) {
-				m_LogLevel = LogSeverity::SEV_DEBUG;
+			if( VariableMap["log-level"].as<std::string>() == "debug" ) {
+				m_LogLevel = LOG_DEBUG;
 			} else if( VariableMap["log-level"].as<std::string>() == "info" ) {
-				m_LogLevel = LogSeverity::SEV_INFO;
+				m_LogLevel = LOG_INFO;
 			} else if( VariableMap["log-level"].as<std::string>() == "warning" ) {
-				m_LogLevel = LogSeverity::SEV_WARNING;
+				m_LogLevel = LOG_WARNING;
 			} else if( VariableMap["log-level"].as<std::string>() == "error" ) {
-				m_LogLevel = LogSeverity::SEV_ERROR;
+				m_LogLevel = LOG_ERR;
 			} else if( VariableMap["log-level"].as<std::string>() == "fatal" ) {
-				m_LogLevel = LogSeverity::SEV_FATAL;
+				m_LogLevel = LOG_CRIT;
 			} else {
-				std::cout << "eloquentd: '" << VariableMap["log-level"].as<std::string>() << "' is not a valid log-level option." << std::endl << OptionsDescription << std::endl;
+				std::cout
+				<< "eloquentd: '"
+				<< VariableMap["log-level"].as<std::string>()
+				<< "' is not a valid log-level option."
+				<< std::endl
+				<< OptionsDescription
+				<< std::endl;
+				
 				exit( EXIT_FAILURE );
+				
 			}
 			
-		}
-		
-		if( VariableMap.count( "log" ) ) {
-			m_LogPath = boost::filesystem::path( VariableMap["log"].as<std::string>() );
+			setlogmask( LOG_UPTO( m_LogLevel ) );
+			
 		}
 		
 		if( VariableMap.count( "config" ) ) {
 			m_ConfigPath = boost::filesystem::path( VariableMap["config"].as<std::string>() );
 		}
 
-		m_Log.set_severity( m_LogLevel );
-
-		std::string m_LogPathString = m_LogPath.string();
-
-		m_Log.add_stream( &std::cout );
-		m_Log.add_stream( new std::ofstream( m_LogPathString.c_str(), std::ios_base::out ), true );
-
 	} catch( boost::program_options::error& e ) {
 		std::cout << "eloquentd: " << e.what() << std::endl;
 		exit( EXIT_FAILURE );
 	} catch( std::exception& e ) {
-		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << e.what() << " #Error #Core" << std::endl;
+		syslog( LOG_ERR, "%s #Application::Init() #Error", e.what() );
 	}
 
 	return *this;
@@ -120,17 +112,18 @@ Eloquent::Application& Eloquent::Application::Init( int argc, const char* argv[]
 }
 
 Eloquent::Application::~Application(){
-	for( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>& Queue : m_Queues ) {
+	for( Queue_t& Queue : m_Queues ) {
 		delete std::get<0>( Queue );
 		delete std::get<1>( Queue );
 		delete std::get<2>( Queue );
 		
 	}
-		
+	
 }
 
 int Eloquent::Application::Run() {
 	try {
+		// Does our config file exist? If not, we're dead in the water
 		if( !boost::filesystem::exists( m_ConfigPath ) ) {
 			std::stringstream ErrorMessage;
 			ErrorMessage << m_ConfigPath.string() << " does not exist";
@@ -141,59 +134,66 @@ int Eloquent::Application::Run() {
 		
 		std::vector<std::thread> ThreadGroup;
 		
+		// Open up the config file
 		std::ifstream ConfigStream( m_ConfigPath.string().c_str(), std::ifstream::in );
 		
-		// Daemon Configurations
+		// Move the contents of the config file into a property tree
 		boost::property_tree::ptree ConfigTree;
 		boost::property_tree::info_parser::read_info( ConfigStream, ConfigTree );
 		
-		// Start Looping Through Daemon Configurations
+		// Close the config file since its not needed anymore
+		if( ConfigStream.is_open() ) {
+			ConfigStream.close();
+		}
+		
+		// Start looping through config property tree
 		for( boost::property_tree::ptree::iterator ConfigTree_it = ConfigTree.begin(); ConfigTree_it != ConfigTree.end(); ++ConfigTree_it  ) {
 			boost::property_tree::ptree ConfigRoot = (*ConfigTree_it).second;
 			
-			m_Queues.push_back( std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
+			// Set up a new queue and its locking mechanisms
+			m_Queues.push_back( Queue_t( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
 			
 			for( boost::property_tree::ptree::iterator ConfigRoot_it = ConfigRoot.begin(); ConfigRoot_it != ConfigRoot.end(); ++ConfigRoot_it ) {
 				boost::property_tree::ptree::value_type ConfigNode = *ConfigRoot_it;
 				
-				ExtensionFactory* MyExtensionFactory = ExtensionManager::Instance( m_LogMutex, m_Log ).LoadExtension( boost::filesystem::path( ConfigNode.second.get<std::string>( "load" ) ) );
+				// Get the path for our extension from the config file
+				boost::filesystem::path ExtensionPath( ConfigNode.second.get<std::string>( "load" ) );
 				
-				IO* MyExtension = reinterpret_cast<IOFactory*>( MyExtensionFactory )->New( ConfigNode
-																						  , m_LogMutex
-																						  , m_Log
-																						  , *std::get<0>( m_Queues.back() )
-																						  , *std::get<1>( m_Queues.back() )
-																						  , *std::get<2>( m_Queues.back() )
-																						  , std::get<3>( m_Queues.back() ) );
+				// Have the extension manager give us a factory object for given extension path
+				IOFactory* MyFactory = reinterpret_cast<IOFactory*>( ExtensionManager::Instance().LoadExtension( ExtensionPath ) );
 				
+				if( !MyFactory ) {
+					throw std::runtime_error( "null extension factory" );
+				}
+				
+				// Construct a new extension
+				IO* MyExtension = MyFactory->New( ConfigNode, *std::get<0>( m_Queues.back() ), *std::get<1>( m_Queues.back() ), *std::get<2>( m_Queues.back() ), std::get<3>( m_Queues.back() ) );
+				
+				if( !MyExtension ) {
+					throw std::runtime_error( "null extension" );
+				}
+				
+				// Is our new extension a writer? If so, we need to increment the number of writers that access the queue.
+				// This used to determine when its ok to remove an item.
 				if( ConfigNode.first == "write" ) {
 					++std::get<3>( m_Queues.back() );
 				}
 				
-				{
-					std::unique_lock<std::mutex> LogLock( m_LogMutex );
-					m_Log( LogSeverity::SEV_DEBUG ) << TimeAndSpace() << "pushing to thread group #Comment #Core" << std::endl;
-				}
-				
+				// Spool up our extension in a new thread
 				ThreadGroup.push_back( std::thread( std::ref( *MyExtension ) ) );
 				
 			}
 			
 		}
 		
-		{
-			std::unique_lock<std::mutex> LogLock( m_LogMutex );
-			m_Log( LogSeverity::SEV_DEBUG ) << TimeAndSpace() << "joining threads #Comment #Core" << std::endl;
-		}
-		
+		// Wait here for all eternity...
 		for( std::thread& Thread: ThreadGroup )
 			Thread.join();
 		
 		return EXIT_SUCCESS;
 
 	} catch( std::exception& e ) {
-		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << e.what() << " #Error #Core" << std::endl;
+		syslog( LOG_ERR, "%s #Application::Run() #Error", e.what() );
 	}
 	
 	return EXIT_FAILURE;

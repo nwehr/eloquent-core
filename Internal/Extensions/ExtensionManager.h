@@ -13,6 +13,8 @@
 #include <deque>
 #include <tuple>
 #include <string>
+#include <thread>
+#include <mutex>
 
 // Boost
 #include <boost/filesystem.hpp>
@@ -26,21 +28,16 @@
 namespace Eloquent {
 	class ExtensionManager {
 	public:
-		static ExtensionManager* m_Instance;
-		
-		explicit ExtensionManager( std::mutex&, streamlog::severity_log& );
+		ExtensionManager();
 		~ExtensionManager();
 		
-		static ExtensionManager& Instance( std::mutex&, streamlog::severity_log& );
+		static ExtensionManager* m_Instance;
+		static ExtensionManager& Instance();
 		
 		ExtensionFactory* LoadExtension( const boost::filesystem::path& );
 		
 	private:
 		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
-		
-		// Logging
-		std::mutex& m_LogMutex;
-		streamlog::severity_log& m_Log;
 		
 	};
 }

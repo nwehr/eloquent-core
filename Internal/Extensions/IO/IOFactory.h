@@ -20,8 +20,6 @@ namespace Eloquent {
 		virtual ~IOFactory();
 		
 		virtual IO* New( const boost::property_tree::ptree::value_type& i_ConfigNode
-						, std::mutex& i_LogMutex
-						, streamlog::severity_log& i_Log
 						, std::mutex& i_QueueMutex
 						, std::condition_variable& i_QueueCV
 						, std::queue<QueueItem>& i_Queue

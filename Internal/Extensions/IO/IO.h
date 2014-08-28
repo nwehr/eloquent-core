@@ -6,6 +6,9 @@
 // See LICENSE.txt
 //
 
+// C
+#include <syslog.h>
+
 // C++
 #include <queue>
 #include <mutex>
@@ -25,8 +28,6 @@ namespace Eloquent {
 		IO();
 	public:
 		explicit IO( const  boost::property_tree::ptree::value_type& i_Config
-					, std::mutex& i_LogMutex
-					, streamlog::severity_log& i_Log
 					, std::mutex& i_QueueMutex
 					, std::condition_variable& i_QueueCV
 					, std::queue<QueueItem>& i_Queue
@@ -40,7 +41,10 @@ namespace Eloquent {
 		std::vector<boost::optional<std::string>>& IfOrigin();
 		
 		void PopQueueItem();
+		
+		void PushQueueItem( QueueItem& );
 		void PushQueueItem( const QueueItem& );
+		
 		QueueItem& NextQueueItem();
 		
 		std::mutex& QueueMutex();

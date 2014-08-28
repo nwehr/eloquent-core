@@ -17,11 +17,14 @@ namespace Eloquent {
 	public:
 		QueueItem( const std::string& i_Data, const std::string& i_Origin );
 		
-		std::map<void*,bool>& Access() __attribute__ ((deprecated));
 		std::map<void*,bool>& Accessed();
+		const std::map<void*,bool>& Accessed() const;
 		
 		std::string& Data();
+		const std::string& Data() const;
+		
 		std::string& Origin();
+		const std::string& Origin() const; 
 		
 	private:
 		std::map<void*,bool> m_Accessed;

@@ -18,10 +18,7 @@ namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
 	class Filter : public Extension {
 	public:
-		explicit Filter( const boost::property_tree::ptree::value_type& i_Config
-						, std::mutex& i_LogMutex
-						, streamlog::severity_log& i_Log );
-		
+		explicit Filter( const boost::property_tree::ptree::value_type& i_Config );
 		virtual ~Filter();
 		
 		virtual std::string& operator<<( std::string& ) = 0;

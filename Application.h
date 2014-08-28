@@ -6,6 +6,9 @@
 // See LICENSE.txt
 //
 
+// C
+#include <syslog.h>
+
 // C++
 #include <deque>
 #include <queue>
@@ -17,9 +20,6 @@
 // Boost
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
-
-// External
-#include <streamlog/streamlog.h>
 
 // Internal
 #include "Extensions/Extension.h"
@@ -38,12 +38,13 @@ namespace Eloquent {
 	static const std::string APP_RELEASE	= "RELEASE";
 	
 	static const std::string CONFIG_PATH	= "/usr/local/etc/eloquent/eloquent.conf";
-	static const std::string LOG_PATH		= "/var/log/eloquent.log";
 	
 	///////////////////////////////////////////////////////////////////////////////
 	// Application
 	///////////////////////////////////////////////////////////////////////////////
 	class Application {
+		typedef std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int> Queue_t;
+		
 		Application();
 		Application( const Application& );
 		void operator=( const Application& );
@@ -53,26 +54,18 @@ namespace Eloquent {
 		
 		Application& Init( int argc, const char* argv[] );
 		
-		int Run();
-
+		static Application* m_Application;
 		static Application& Instance();
+		
+		int Run();
 		
 	private:
 		// Arguement Options
 		int m_LogLevel;
-		boost::filesystem::path m_LogPath;
 		boost::filesystem::path m_ConfigPath;
 		
-		// Logging
-		std::mutex m_LogMutex;
-		streamlog::severity_log m_Log;
-		
 		// Queues and Filters
-		std::deque<std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int>> m_Queues;
-
-	public:
-		// Instance Pointer
-		static Application* m_Application;
+		std::deque<Queue_t> m_Queues;
 		
 	};
 

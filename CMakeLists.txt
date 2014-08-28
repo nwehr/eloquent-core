@@ -53,6 +53,7 @@ set( lib_lib
 	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
 	streamlog
+	dl
 )
 
 add_library( ${target_lib} SHARED ${lib_src} )
@@ -61,15 +62,12 @@ target_link_libraries( ${target_lib} ${lib_lib} )
 ##############################################################################
 # Build - Executable
 ##############################################################################
-file( GLOB exe_src
-	"${PROJECT_SOURCE_DIR}/*.cpp"
-)
+file( GLOB exe_src "${PROJECT_SOURCE_DIR}/*.cpp" )
 
 set( exe_lib
 	${Boost_SYSTEM_LIBRARY}
 	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
-	streamlog
 	dl
 	Eloquent
 )
@@ -80,15 +78,15 @@ target_link_libraries( ${target_exe} ${exe_lib} )
 ##############################################################################
 # Install - Library
 ##############################################################################
-file( GLOB main_headers "${PROJECT_SOURCE_DIR}/Internal/*.h" )
-file( GLOB extension_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h" )
-file( GLOB filter_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/*.h" )
-file( GLOB io_headers "${PROJECT_SOURCE_DIR}/Internal/Extensions/IO/*.h" )
+file( GLOB main_headers				"${PROJECT_SOURCE_DIR}/Internal/*.h" )
+file( GLOB extension_headers		"${PROJECT_SOURCE_DIR}/Internal/Extensions/*.h" )
+file( GLOB filter_headers			"${PROJECT_SOURCE_DIR}/Internal/Extensions/Filters/*.h" )
+file( GLOB io_headers				"${PROJECT_SOURCE_DIR}/Internal/Extensions/IO/*.h" )
 
-install( FILES ${main_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
+install( FILES ${main_headers}		DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent" )
 install( FILES ${extension_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions" )
-install( FILES ${filter_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Filters" )
-install( FILES ${io_headers} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/IO" )
+install( FILES ${filter_headers}	DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/Filters" )
+install( FILES ${io_headers}		DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Eloquent/Extensions/IO" )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set_target_properties( ${target_lib} PROPERTIES MACOSX_RPATH 1 )
@@ -109,10 +107,10 @@ if( NOT EXISTS "${CMAKE_INSTALL_PREFIX}/etc/eloquent/eloquent.conf" )
 endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
-	install( FILES "${PROJECT_SOURCE_DIR}/Config/com.evrichart.eloquentd.plist" DESTINATION "/Library/LaunchDaemons" )
-	install( FILES "${PROJECT_SOURCE_DIR}/Config/com.evrichart.eloquentd.conf" DESTINATION "/etc/newsyslog.d" )
-
-	install( CODE "execute_process( COMMAND sudo launchctl load /Library/LaunchDaemons/com.evrichart.eloquentd.plist )" )
+	if( NOT EXISTS "/Library/LaunchDaemons/com.evrichart.eloquentd.plist" )
+		install( FILES "${PROJECT_SOURCE_DIR}/Config/com.evrichart.eloquentd.plist" DESTINATION "/Library/LaunchDaemons" )
+		install( CODE "execute_process( COMMAND sudo launchctl load /Library/LaunchDaemons/com.evrichart.eloquentd.plist )" )
+	endif()
 endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )

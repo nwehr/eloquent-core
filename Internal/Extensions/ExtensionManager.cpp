@@ -1,28 +1,28 @@
 // C
 #include <dlfcn.h>
+#include <syslog.h>
+
+// C++
+#include <sstream>
 
 // Internal
 #include "ExtensionManager.h"
-#include "Logging.h"
 
 Eloquent::ExtensionManager* Eloquent::ExtensionManager::m_Instance;
 
-Eloquent::ExtensionManager::ExtensionManager( std::mutex& i_LogMutex, streamlog::severity_log& i_Log )
-: m_LogMutex( i_LogMutex )
-, m_Log( i_Log )
-{}
+Eloquent::ExtensionManager::ExtensionManager() {}
 
 Eloquent::ExtensionManager::~ExtensionManager() {
 	for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
 		delete std::get<2>( Extension );
 		dlclose( std::get<0>( Extension ) );
-		
 	}
+	
 }
 		
-Eloquent::ExtensionManager& Eloquent::ExtensionManager::Instance( std::mutex& i_LogMutex, streamlog::severity_log& i_Log ) {
+Eloquent::ExtensionManager& Eloquent::ExtensionManager::Instance() {
 	if( !m_Instance )
-		m_Instance = new Eloquent::ExtensionManager( i_LogMutex, i_Log );
+		m_Instance = new Eloquent::ExtensionManager();
 	
 	return *m_Instance;
 
@@ -30,6 +30,7 @@ Eloquent::ExtensionManager& Eloquent::ExtensionManager::Instance( std::mutex& i_
 
 Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( const boost::filesystem::path& i_ExtensionPath ) {
 	try {
+		// Have we already loaded an extension for the given path? If so, return the factory object for it
 		for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
 			if( i_ExtensionPath.string() == std::get<1>( Extension ) ) {
 				return std::get<2>( Extension );
@@ -37,52 +38,42 @@ Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( const boo
 			
 		}
 		
-		boost::filesystem::path ExtensionPath = i_ExtensionPath;
-		
-		if( !boost::filesystem::exists( ExtensionPath ) ) {
-			std::unique_lock<std::mutex> LogLock( m_LogMutex );
-			m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << "unable to find extension at " << ExtensionPath.string() << " #Error #Filesystem #Core" << std::endl;
+		// Does this path even exist?
+		if( !boost::filesystem::exists( i_ExtensionPath ) ) {
+			syslog( LOG_ERR, "unable to find extension at %s #ExtensionManager::LoadExtension() #Error", i_ExtensionPath.string().c_str() );
 		}
 		
-		void* Extension = dlopen( ExtensionPath.string().c_str(), RTLD_LAZY | RTLD_LOCAL );
+		// Load the shared object
+		void* Extension = dlopen( i_ExtensionPath.string().c_str(), RTLD_NOW | RTLD_LOCAL );
+		
+		syslog( LOG_DEBUG, "loading extension %s #ExtensionManager::LoadExtension() #Debug", i_ExtensionPath.string().c_str() );
 		
 		if( !Extension ) {
-			{
-				std::unique_lock<std::mutex> LogLock( m_LogMutex );
-				m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << "unable to load extension at " << ExtensionPath.string() << ". debug message following: #Error #Filesystem #Core" << std::endl;
-				m_Log( LogSeverity::SEV_ERROR ) << std::string( dlerror() ) << std::endl;
-				
-			}
-			
-		} else {
-			void* AttachSymbol = dlsym( Extension, "Attach" );
-			
-			if( !AttachSymbol ) {
-				std::unique_lock<std::mutex> LogLock( m_LogMutex );
-				m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << "unable to load extension. no attach symbol at " << ExtensionPath.string() << "#Error #Core" << std::endl;
-			} else {
-				{
-					std::unique_lock<std::mutex> LogLock( m_LogMutex );
-					m_Log( LogSeverity::SEV_DEBUG ) << TimeAndSpace() << "loading extension " << ExtensionPath.string() << " #Comment #Core" << std::endl;
-				}
-				
-				ExtensionFactory* (*AttachFunction)(void) = 0;
-				
-				*reinterpret_cast<void**>( &AttachFunction ) = AttachSymbol;
-				
-				ExtensionFactory* MyExtensionFactory = AttachFunction();
-				
-				m_Extensions.push_back( std::tuple<void*, std::string, ExtensionFactory*>( Extension, ExtensionPath.string(), MyExtensionFactory ) );
-				
-				return MyExtensionFactory;
-				
-			}
-			
+			throw std::runtime_error( dlerror() );
 		}
 		
+		// Look for the "attach" symbol that returns the factory object
+		void* AttachSymbol = dlsym( Extension, "Attach" );
+		
+		if( !AttachSymbol ) {
+			throw std::runtime_error( dlerror() );
+		}
+		
+		// Set up the function pointers...
+		ExtensionFactory* (*AttachFunction)(void) = 0;
+		*reinterpret_cast<void**>( &AttachFunction ) = AttachSymbol;
+		
+		// Get our factory object
+		ExtensionFactory* MyExtensionFactory = AttachFunction();
+		
+		// Push the entire extension (shared object, path, and factory object) to a container
+		m_Extensions.push_back( std::tuple<void*, std::string, ExtensionFactory*>( Extension, i_ExtensionPath.string(), MyExtensionFactory ) );
+		
+		// Return newly-created factory object
+		return MyExtensionFactory;
+		
 	} catch( std::exception& e ) {
-		std::unique_lock<std::mutex> LogLock( m_LogMutex );
-		m_Log( LogSeverity::SEV_ERROR ) << TimeAndSpace() << e.what() << " #Error #Core" << std::endl;
+		syslog( LOG_ERR, "%s #ExtensionManager::LoadExtension() #Error", e.what() );
 	}
 	
 	return std::nullptr_t();
