@@ -25,15 +25,18 @@ namespace Eloquent {
 	// IO : Extension
 	///////////////////////////////////////////////////////////////////////////////
 	class IO : public Extension {
-		IO();
 	public:
+		IO() = delete;
+		IO& operator=( const IO& ) = delete;
+		IO( const IO& ) = delete; 
+		
 		explicit IO( const  boost::property_tree::ptree::value_type& i_Config
 					, std::mutex& i_QueueMutex
 					, std::condition_variable& i_QueueCV
 					, std::queue<QueueItem>& i_Queue
-					, int& i_NumWriters );
+					, unsigned int& i_NumWriters );
 		
-		virtual ~IO();
+		virtual ~IO() = default;
 		
 		virtual void operator()() = 0;
 		
@@ -47,9 +50,9 @@ namespace Eloquent {
 		
 		QueueItem& NextQueueItem();
 		
-		std::mutex& QueueMutex();
-		std::condition_variable& QueueCV();
-		std::queue<QueueItem>& Queue();
+		inline std::mutex& QueueMutex() { return m_QueueMutex; }
+		inline std::condition_variable& QueueCV() { return m_QueueCV; }
+		inline std::queue<QueueItem>& Queue() { return m_Queue; }
 		
 	protected:
 		boost::optional<std::string> m_SetOrigin;
@@ -59,7 +62,7 @@ namespace Eloquent {
 		std::mutex&					m_QueueMutex;
 		std::condition_variable&	m_QueueCV;
 		std::queue<QueueItem>&		m_Queue;
-		int&						m_NumWriters;
+		unsigned int&				m_NumWriters;
 		
 		// Filters
 		std::deque<Filter*>	m_Filters;

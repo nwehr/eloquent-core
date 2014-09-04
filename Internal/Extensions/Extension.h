@@ -14,12 +14,15 @@ namespace Eloquent {
 	// Extension
 	///////////////////////////////////////////////////////////////////////////////
 	class Extension {
-		Extension(); 
 	public:
-		explicit Extension( const boost::property_tree::ptree::value_type& i_Config );
-		virtual ~Extension();
+		Extension() = delete;
 		
-		boost::property_tree::ptree::value_type& Config();
+		explicit Extension( const boost::property_tree::ptree::value_type& i_Config );
+		virtual ~Extension() = default;
+		
+		inline boost::property_tree::ptree::value_type& Config() {
+			return m_Config; 
+		}
 		
 	protected:
 		// Configuration

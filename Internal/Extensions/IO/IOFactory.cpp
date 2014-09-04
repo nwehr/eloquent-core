@@ -1,13 +1,4 @@
-//
-// Copyright 2013-2014 EvriChart, Inc. All Rights Reserved.
-// See LICENSE.txt
-//
-
-// Internal
 #include "IOFactory.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// IOExtensionFactory : ExtensionFactory
-///////////////////////////////////////////////////////////////////////////////
-Eloquent::IOFactory::IOFactory()  {}
+Eloquent::IOFactory::IOFactory() {}
 Eloquent::IOFactory::~IOFactory() {}

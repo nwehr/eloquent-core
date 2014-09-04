@@ -13,15 +13,16 @@
 		5807151919ACB2A6003D483D /* libEloquent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151819ACB2A6003D483D /* libEloquent.dylib */; };
 		5807152D19ACBA2B003D483D /* libSystem.B.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807152C19ACBA2B003D483D /* libSystem.B.dylib */; };
 		5807153619ACBF2B003D483D /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E4FE19A3DFE4006451E4 /* Extension.cpp */; };
-		5807153719ACBF2D003D483D /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E50019A3DFE4006451E4 /* ExtensionFactory.cpp */; };
 		5807153819ACBF36003D483D /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E50319A3DFE4006451E4 /* Filter.cpp */; };
-		5807153919ACBF39003D483D /* FilterFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E50519A3DFE4006451E4 /* FilterFactory.cpp */; };
 		5807153A19ACBF3B003D483D /* ExtensionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E51219A520F5006451E4 /* ExtensionManager.cpp */; };
 		5807153C19ACBF42003D483D /* QueueItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E46F199E3549006451E4 /* QueueItem.cpp */; };
 		5807153D19ACBF83003D483D /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151219ACB297003D483D /* libboost_filesystem-mt.dylib */; };
 		5807153E19ACBF86003D483D /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151419ACB297003D483D /* libboost_system-mt.dylib */; };
 		5827E437199D3A22006451E4 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3CD199D3A22006451E4 /* Application.cpp */; };
 		5827E453199D3A22006451E4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E435199D3A22006451E4 /* main.cpp */; };
+		58E13D0019B0F38700B82ED5 /* IOFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13CFF19B0F38700B82ED5 /* IOFactory.cpp */; };
+		58E13D0219B0F3D000B82ED5 /* FilterFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13D0119B0F3D000B82ED5 /* FilterFactory.cpp */; };
+		58E13D0419B0F45E00B82ED5 /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13D0319B0F45E00B82ED5 /* ExtensionFactory.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,12 +49,6 @@
 		5827E3CD199D3A22006451E4 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		5827E3CE199D3A22006451E4 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		5827E40E199D3A22006451E4 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		5827E410199D3A22006451E4 /* com.evrichart.eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = com.evrichart.eloquentd.conf; sourceTree = "<group>"; };
-		5827E411199D3A22006451E4 /* com.evrichart.eloquentd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.evrichart.eloquentd.plist; sourceTree = "<group>"; };
-		5827E412199D3A22006451E4 /* eloquent.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquent.conf; sourceTree = "<group>"; };
-		5827E413199D3A22006451E4 /* eloquentd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd; sourceTree = "<group>"; };
-		5827E414199D3A22006451E4 /* eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd.conf; sourceTree = "<group>"; };
-		5827E415199D3A22006451E4 /* extensions.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = extensions.conf; sourceTree = "<group>"; };
 		5827E434199D3A22006451E4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		5827E435199D3A22006451E4 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5827E436199D3A22006451E4 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -62,19 +57,24 @@
 		5827E47A199E8E15006451E4 /* Attach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attach.h; sourceTree = "<group>"; };
 		5827E4FE19A3DFE4006451E4 /* Extension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Extension.cpp; sourceTree = "<group>"; };
 		5827E4FF19A3DFE4006451E4 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
-		5827E50019A3DFE4006451E4 /* ExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionFactory.cpp; sourceTree = "<group>"; };
 		5827E50119A3DFE4006451E4 /* ExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionFactory.h; sourceTree = "<group>"; };
 		5827E50319A3DFE4006451E4 /* Filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
 		5827E50419A3DFE4006451E4 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
-		5827E50519A3DFE4006451E4 /* FilterFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterFactory.cpp; sourceTree = "<group>"; };
 		5827E50619A3DFE4006451E4 /* FilterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterFactory.h; sourceTree = "<group>"; };
 		5827E50819A3DFE4006451E4 /* IO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
 		5827E50919A3DFE4006451E4 /* IO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
-		5827E50A19A3DFE4006451E4 /* IOFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOFactory.cpp; sourceTree = "<group>"; };
 		5827E50B19A3DFE4006451E4 /* IOFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOFactory.h; sourceTree = "<group>"; };
 		5827E51219A520F5006451E4 /* ExtensionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionManager.cpp; sourceTree = "<group>"; };
 		5827E51319A520F5006451E4 /* ExtensionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionManager.h; sourceTree = "<group>"; };
 		58A627A819A3FB130032A629 /* AUTHORS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS.txt; sourceTree = "<group>"; };
+		58E13CFF19B0F38700B82ED5 /* IOFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOFactory.cpp; sourceTree = "<group>"; };
+		58E13D0119B0F3D000B82ED5 /* FilterFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterFactory.cpp; sourceTree = "<group>"; };
+		58E13D0319B0F45E00B82ED5 /* ExtensionFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionFactory.cpp; sourceTree = "<group>"; };
+		58E13D0A19B7392900B82ED5 /* eloquent.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquent.conf; sourceTree = "<group>"; };
+		58E13D0C19B7392900B82ED5 /* eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd.conf; sourceTree = "<group>"; };
+		58E13D0E19B7392900B82ED5 /* eloquentd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eloquentd; sourceTree = "<group>"; };
+		58E13D1019B7392900B82ED5 /* com.evrichart.eloquentd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = com.evrichart.eloquentd.conf; sourceTree = "<group>"; };
+		58E13D1219B7392900B82ED5 /* com.evrichart.eloquentd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.evrichart.eloquentd.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,12 +144,11 @@
 		5827E40F199D3A22006451E4 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				5827E410199D3A22006451E4 /* com.evrichart.eloquentd.conf */,
-				5827E411199D3A22006451E4 /* com.evrichart.eloquentd.plist */,
-				5827E412199D3A22006451E4 /* eloquent.conf */,
-				5827E413199D3A22006451E4 /* eloquentd */,
-				5827E414199D3A22006451E4 /* eloquentd.conf */,
-				5827E415199D3A22006451E4 /* extensions.conf */,
+				58E13D0919B7392900B82ED5 /* etc-eloquent */,
+				58E13D0B19B7392900B82ED5 /* etc-init */,
+				58E13D0D19B7392900B82ED5 /* etc-logrotate.d */,
+				58E13D0F19B7392900B82ED5 /* etc-newsyslog.d */,
+				58E13D1119B7392900B82ED5 /* Library-LaunchDaemons */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -170,8 +169,8 @@
 			children = (
 				5827E4FE19A3DFE4006451E4 /* Extension.cpp */,
 				5827E4FF19A3DFE4006451E4 /* Extension.h */,
-				5827E50019A3DFE4006451E4 /* ExtensionFactory.cpp */,
 				5827E50119A3DFE4006451E4 /* ExtensionFactory.h */,
+				58E13D0319B0F45E00B82ED5 /* ExtensionFactory.cpp */,
 				5827E50219A3DFE4006451E4 /* Filters */,
 				5827E50719A3DFE4006451E4 /* IO */,
 				5827E51219A520F5006451E4 /* ExtensionManager.cpp */,
@@ -185,8 +184,8 @@
 			children = (
 				5827E50319A3DFE4006451E4 /* Filter.cpp */,
 				5827E50419A3DFE4006451E4 /* Filter.h */,
-				5827E50519A3DFE4006451E4 /* FilterFactory.cpp */,
 				5827E50619A3DFE4006451E4 /* FilterFactory.h */,
+				58E13D0119B0F3D000B82ED5 /* FilterFactory.cpp */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -196,10 +195,50 @@
 			children = (
 				5827E50819A3DFE4006451E4 /* IO.cpp */,
 				5827E50919A3DFE4006451E4 /* IO.h */,
-				5827E50A19A3DFE4006451E4 /* IOFactory.cpp */,
+				58E13CFF19B0F38700B82ED5 /* IOFactory.cpp */,
 				5827E50B19A3DFE4006451E4 /* IOFactory.h */,
 			);
 			path = IO;
+			sourceTree = "<group>";
+		};
+		58E13D0919B7392900B82ED5 /* etc-eloquent */ = {
+			isa = PBXGroup;
+			children = (
+				58E13D0A19B7392900B82ED5 /* eloquent.conf */,
+			);
+			path = "etc-eloquent";
+			sourceTree = "<group>";
+		};
+		58E13D0B19B7392900B82ED5 /* etc-init */ = {
+			isa = PBXGroup;
+			children = (
+				58E13D0C19B7392900B82ED5 /* eloquentd.conf */,
+			);
+			path = "etc-init";
+			sourceTree = "<group>";
+		};
+		58E13D0D19B7392900B82ED5 /* etc-logrotate.d */ = {
+			isa = PBXGroup;
+			children = (
+				58E13D0E19B7392900B82ED5 /* eloquentd */,
+			);
+			path = "etc-logrotate.d";
+			sourceTree = "<group>";
+		};
+		58E13D0F19B7392900B82ED5 /* etc-newsyslog.d */ = {
+			isa = PBXGroup;
+			children = (
+				58E13D1019B7392900B82ED5 /* com.evrichart.eloquentd.conf */,
+			);
+			path = "etc-newsyslog.d";
+			sourceTree = "<group>";
+		};
+		58E13D1119B7392900B82ED5 /* Library-LaunchDaemons */ = {
+			isa = PBXGroup;
+			children = (
+				58E13D1219B7392900B82ED5 /* com.evrichart.eloquentd.plist */,
+			);
+			path = "Library-LaunchDaemons";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,9 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5807153619ACBF2B003D483D /* Extension.cpp in Sources */,
-				5807153719ACBF2D003D483D /* ExtensionFactory.cpp in Sources */,
 				5807153819ACBF36003D483D /* Filter.cpp in Sources */,
-				5807153919ACBF39003D483D /* FilterFactory.cpp in Sources */,
 				5807153A19ACBF3B003D483D /* ExtensionManager.cpp in Sources */,
 				5807153C19ACBF42003D483D /* QueueItem.cpp in Sources */,
 			);
@@ -302,6 +339,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E13D0219B0F3D000B82ED5 /* FilterFactory.cpp in Sources */,
+				58E13D0019B0F38700B82ED5 /* IOFactory.cpp in Sources */,
+				58E13D0419B0F45E00B82ED5 /* ExtensionFactory.cpp in Sources */,
 				5827E437199D3A22006451E4 /* Application.cpp in Sources */,
 				5827E453199D3A22006451E4 /* main.cpp in Sources */,
 			);
@@ -484,6 +524,7 @@
 				5807153519ACBF21003D483D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5827E3BD199D39E7006451E4 /* Build configuration list for PBXProject "eloquentd" */ = {
 			isa = XCConfigurationList;

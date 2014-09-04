@@ -18,8 +18,10 @@ namespace Eloquent {
 	///////////////////////////////////////////////////////////////////////////////
 	class Filter : public Extension {
 	public:
+		Filter() = delete;
+		
 		explicit Filter( const boost::property_tree::ptree::value_type& i_Config );
-		virtual ~Filter();
+		virtual ~Filter() = default;
 		
 		virtual std::string& operator<<( std::string& ) = 0;
 		

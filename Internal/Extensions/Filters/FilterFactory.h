@@ -18,6 +18,7 @@ namespace Eloquent {
 	public:
 		FilterFactory();
 		virtual ~FilterFactory();
+		
 		virtual Filter* New( const boost::property_tree::ptree::value_type& i_ConfigNode ) = 0;
 		
 	};

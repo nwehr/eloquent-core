@@ -7,5 +7,3 @@
 Eloquent::Filter::Filter( const boost::property_tree::ptree::value_type& i_Config )
 : Extension( i_Config )
 {}
-
-Eloquent::Filter::~Filter() {}

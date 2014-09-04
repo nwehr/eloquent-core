@@ -4,13 +4,12 @@
 
 // C++
 #include <sstream>
+#include <functional>
 
 // Internal
 #include "ExtensionManager.h"
 
 Eloquent::ExtensionManager* Eloquent::ExtensionManager::m_Instance;
-
-Eloquent::ExtensionManager::ExtensionManager() {}
 
 Eloquent::ExtensionManager::~ExtensionManager() {
 	for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
@@ -28,7 +27,7 @@ Eloquent::ExtensionManager& Eloquent::ExtensionManager::Instance() {
 
 }
 
-Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( const boost::filesystem::path& i_ExtensionPath ) {
+Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( boost::filesystem::path i_ExtensionPath ) {
 	try {
 		// Have we already loaded an extension for the given path? If so, return the factory object for it
 		for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
@@ -59,12 +58,8 @@ Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( const boo
 			throw std::runtime_error( dlerror() );
 		}
 		
-		// Set up the function pointers...
-		ExtensionFactory* (*AttachFunction)(void) = 0;
-		*reinterpret_cast<void**>( &AttachFunction ) = AttachSymbol;
-		
 		// Get our factory object
-		ExtensionFactory* MyExtensionFactory = AttachFunction();
+		ExtensionFactory* MyExtensionFactory = reinterpret_cast<ExtensionFactory*(*)(void)>( AttachSymbol )();
 		
 		// Push the entire extension (shared object, path, and factory object) to a container
 		m_Extensions.push_back( std::tuple<void*, std::string, ExtensionFactory*>( Extension, i_ExtensionPath.string(), MyExtensionFactory ) );

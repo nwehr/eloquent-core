@@ -3,9 +3,6 @@
 // See LICENSE.txt
 //
 
-// Boost
-#include <boost/smart_ptr.hpp>
-
 // Internal
 #include "Extensions/IO/IO.h"
 #include "Extensions/Filters/Filter.h"
@@ -19,7 +16,7 @@ Eloquent::IO::IO( const  boost::property_tree::ptree::value_type& i_Config
 				 , std::mutex& i_QueueMutex
 				 , std::condition_variable& i_QueueCV
 				 , std::queue<QueueItem>& i_Queue
-				 , int& i_NumWriters )
+				 , unsigned int& i_NumWriters )
 : Eloquent::Extension( i_Config )
 , m_SetOrigin( m_Config.second.get_optional<std::string>( "set_origin" ) )
 , m_IfOrigin( std::vector<boost::optional<std::string>>()  )
@@ -44,8 +41,6 @@ Eloquent::IO::IO( const  boost::property_tree::ptree::value_type& i_Config
 	}
 
 }
-
-Eloquent::IO::~IO(){}
 
 boost::optional<std::string>& Eloquent::IO::SetOrigin() {
 	return m_SetOrigin;
@@ -75,7 +70,7 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 	}
 	
 	// Add to the main queue
-	{
+	if( i_QueueItem.Data().length() ) {
 		std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 		m_Queue.push( i_QueueItem );
 	}
@@ -145,42 +140,30 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 		
 		// Any data left to return?
 		{
-			bool HaveData = true;
+			bool EmptyData = false;
 			
 			{
 				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 				
 				if( !m_Queue.front().Data().length() ) {
 					syslog( LOG_DEBUG, "data is %lu bytes long #IO::NextQueueItem #Debug", m_Queue.size() );
-					HaveData = false;
+					EmptyData = true;
 				}
 				
 			}
 			
-			if( !HaveData ) {
+			if( EmptyData ) {
 				PopQueueItem();
 				continue;
 			}
 			
 		}
 		
-		// return data
+		// Return data
 		break;
 
 	}
 	
 	return m_Queue.front();
 	
-}
-
-std::mutex& Eloquent::IO::QueueMutex() {
-	return m_QueueMutex;
-}
-
-std::condition_variable& Eloquent::IO::QueueCV() {
-	return m_QueueCV;
-}
-
-std::queue<Eloquent::QueueItem>& Eloquent::IO::Queue() {
-	return m_Queue;
 }

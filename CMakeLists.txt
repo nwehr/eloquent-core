@@ -5,30 +5,28 @@ cmake_minimum_required( VERSION 2.8 )
 
 project( eloquentd )
 
+set( Boost_USE_MULTITHREADED	ON )
+set( Boost_USE_STATIC_LIBS		OFF )
+set( Boost_USE_STATIC_RUNTIME	OFF )
+
+find_package( Boost 1.55.0 COMPONENTS system filesystem program_options )
+
 set( target_exe eloquentd )
 set( target_lib Eloquent )
 
-SET (CMAKE_CXX_FLAGS                "-Wall -std=c++11")
-SET (CMAKE_CXX_FLAGS_DEBUG          "-g")
-SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
-SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+set( CMAKE_CXX_FLAGS                "-Wall -std=c++11" )
+set( CMAKE_CXX_FLAGS_DEBUG          "-g" )
+set( CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG" )
+set( CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG" )
+set( CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g" )
 
 ##############################################################################
 # Header Search Paths
 ##############################################################################
-set(Boost_USE_STATIC_LIBS        OFF)
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME	 OFF)
-
-find_package( Boost 1.55.0 COMPONENTS system filesystem regex program_options )
-
-if(Boost_FOUND)
-	include_directories( ${Boost_INCLUDE_DIRS} )
-endif()
-
 include_directories( "${PROJECT_SOURCE_DIR}" )
 include_directories( "${PROJECT_SOURCE_DIR}/Internal" )
+
+include_directories( ${Boost_INCLUDE_DIRS} )
 
 include_directories( "/opt/local/include" )
 include_directories( "/usr/include" )
@@ -53,11 +51,9 @@ file( GLOB lib_src
 
 set( lib_lib
 	${Boost_SYSTEM_LIBRARY}
-	${Boost_REGEX_LIBRARY}
-	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
-	streamlog
-	dl
+	${Boost_PROGRAM_OPTIONS_LIBRARY}
+	${CMAKE_DL_LIBS}
 )
 
 add_library( ${target_lib} SHARED ${lib_src} )
@@ -70,9 +66,9 @@ file( GLOB exe_src "${PROJECT_SOURCE_DIR}/*.cpp" )
 
 set( exe_lib
 	${Boost_SYSTEM_LIBRARY}
-	${Boost_PROGRAM_OPTIONS_LIBRARY}
 	${Boost_FILESYSTEM_LIBRARY}
-	dl
+	${Boost_PROGRAM_OPTIONS_LIBRARY}
+	${CMAKE_DL_LIBS}
 	Eloquent
 )
 

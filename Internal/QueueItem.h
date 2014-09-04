@@ -12,19 +12,24 @@
 
 namespace Eloquent {
 	class QueueItem {
-		QueueItem();
-		
 	public:
-		QueueItem( const std::string& i_Data, const std::string& i_Origin );
+		QueueItem() = delete;
 		
-		std::map<void*,bool>& Accessed();
-		const std::map<void*,bool>& Accessed() const;
+		QueueItem& operator=( const QueueItem& ) = default;
+		QueueItem( const QueueItem& ) = default;
 		
-		std::string& Data();
-		const std::string& Data() const;
+		explicit QueueItem( const std::string& i_Data, const std::string& i_Origin );
 		
-		std::string& Origin();
-		const std::string& Origin() const; 
+		virtual ~QueueItem() = default;
+		
+		inline std::map<void*,bool>& Accessed()	{ return m_Accessed; }
+		inline const std::map<void*,bool>& Accessed() const { return m_Accessed; }
+		
+		inline std::string& Data() { return m_Data; }
+		inline const std::string& Data() const { return m_Data; }
+		
+		inline std::string& Origin() { return m_Origin; }
+		inline const std::string& Origin() const { return m_Origin; }
 		
 	private:
 		std::map<void*,bool> m_Accessed;

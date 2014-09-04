@@ -146,12 +146,12 @@ int Eloquent::Application::Run() {
 			ConfigStream.close();
 		}
 		
-		// Start looping through config property tree
+		// Start iterating over config property tree
 		for( boost::property_tree::ptree::iterator ConfigTree_it = ConfigTree.begin(); ConfigTree_it != ConfigTree.end(); ++ConfigTree_it  ) {
 			boost::property_tree::ptree ConfigRoot = (*ConfigTree_it).second;
 			
 			// Set up a new queue and its locking mechanisms
-			m_Queues.push_back( Queue_t( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), int( 0 ) ) );
+			m_Queues.push_back( Queue_t( new std::mutex(), new std::condition_variable(), new std::queue<QueueItem>(), (unsigned int)( 0 ) ) );
 			
 			for( boost::property_tree::ptree::iterator ConfigRoot_it = ConfigRoot.begin(); ConfigRoot_it != ConfigRoot.end(); ++ConfigRoot_it ) {
 				boost::property_tree::ptree::value_type ConfigNode = *ConfigRoot_it;

@@ -43,7 +43,7 @@ namespace Eloquent {
 	// Application
 	///////////////////////////////////////////////////////////////////////////////
 	class Application {
-		typedef std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, int> Queue_t;
+		typedef std::tuple<std::mutex*, std::condition_variable*, std::queue<QueueItem>*, unsigned int> Queue_t;
 		
 		Application();
 		Application( const Application& );

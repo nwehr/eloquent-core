@@ -19,22 +19,18 @@
 // Boost
 #include <boost/filesystem.hpp>
 
-// External
-#include <streamlog/streamlog.h>
-
 // Internal
 #include "ExtensionFactory.h"
 
 namespace Eloquent {
 	class ExtensionManager {
 	public:
-		ExtensionManager();
 		~ExtensionManager();
 		
 		static ExtensionManager* m_Instance;
 		static ExtensionManager& Instance();
 		
-		ExtensionFactory* LoadExtension( const boost::filesystem::path& );
+		ExtensionFactory* LoadExtension( boost::filesystem::path );
 		
 	private:
 		std::deque<std::tuple<void*, std::string, ExtensionFactory*>> m_Extensions;
