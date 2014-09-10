@@ -64,19 +64,28 @@ void Eloquent::IO::PopQueueItem() {
 }
 
 void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
+	bool FilterSuccess = true;
+	
 	// Apply filters
 	for( Filter* F : m_Filters ) {
-		(*F) << i_QueueItem.Data();
+		FilterSuccess = (*F) << i_QueueItem.Data();
+		
+		if( !FilterSuccess ) break;
+		
 	}
 	
-	// Add to the main queue
-	if( i_QueueItem.Data().length() ) {
-		std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
-		m_Queue.push( i_QueueItem );
+	// Only continue if all of the filters were able to be applied
+	if( FilterSuccess ) {
+		// Add to the main queue
+		if( i_QueueItem.Data().length() ) {
+			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+			m_Queue.push( i_QueueItem );
+		}
+		
+		// Notify all the writers of a new item
+		m_QueueCV.notify_one();
+		
 	}
-	
-	// Notify all the writers of a new item
-	m_QueueCV.notify_one();
 	
 }
 
@@ -94,8 +103,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			while( !m_Queue.size() || m_Queue.front().Accessed()[this] ) {
 				m_QueueCV.wait( QueueLock );
 			}
-			
-			syslog( LOG_DEBUG, "fetching 1 of %lu item(s) #IO::NextQueueItem #Debug", m_Queue.size() );
 			
 		}
 		
@@ -130,12 +137,25 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 		
 		// Apply filters
 		{
-			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+			bool FilterSuccess = true;
 			
-			for( Filter* F : m_Filters ) {
-				(*F) << m_Queue.front().Data();
+			{
+				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+				
+				for( Filter* F : m_Filters ) {
+					FilterSuccess = (*F) << m_Queue.front().Data();
+					
+					if( !FilterSuccess ) break;
+					
+				}
+				
 			}
 			
+			if( !FilterSuccess ) {
+				PopQueueItem();
+				continue;
+			}
+
 		}
 		
 		// Any data left to return?
