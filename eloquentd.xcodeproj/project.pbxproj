@@ -54,7 +54,6 @@
 		5827E436199D3A22006451E4 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		5827E46F199E3549006451E4 /* QueueItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QueueItem.cpp; sourceTree = "<group>"; };
 		5827E470199E3549006451E4 /* QueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueItem.h; sourceTree = "<group>"; };
-		5827E47A199E8E15006451E4 /* Attach.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attach.h; sourceTree = "<group>"; };
 		5827E4FE19A3DFE4006451E4 /* Extension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Extension.cpp; sourceTree = "<group>"; };
 		5827E4FF19A3DFE4006451E4 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
 		5827E50119A3DFE4006451E4 /* ExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionFactory.h; sourceTree = "<group>"; };
@@ -159,7 +158,6 @@
 				5827E4FD19A3DFE4006451E4 /* Extensions */,
 				5827E46F199E3549006451E4 /* QueueItem.cpp */,
 				5827E470199E3549006451E4 /* QueueItem.h */,
-				5827E47A199E8E15006451E4 /* Attach.h */,
 			);
 			path = Internal;
 			sourceTree = "<group>";

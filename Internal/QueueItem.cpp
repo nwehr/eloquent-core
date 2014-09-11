@@ -5,31 +5,26 @@
 
 #include "QueueItem.h"
 
-Eloquent::QueueItem::QueueItem( const std::string& i_Data, const std::string& i_Origin )
+Eloquent::QueueItem::QueueItem( const std::string& i_Data
+							   , const std::string& i_Origin
+							   , const std::string& i_Destination )
 : m_Data( i_Data )
 , m_Origin( i_Origin )
+, m_Destination( i_Destination )
 {}
 
-//std::map<void*,bool>& Eloquent::QueueItem::Accessed() {
-//	return m_Accessed; 
-//}
-//
-//const std::map<void*,bool>& Eloquent::QueueItem::Accessed() const {
-//	return m_Accessed; 
-//}
-//
-//std::string& Eloquent::QueueItem::Data() {
-//	return m_Data;
-//}
-//
-//const std::string& Eloquent::QueueItem::Data() const {
-//	return m_Data;
-//}
-//
-//std::string& Eloquent::QueueItem::Origin() {
-//	return m_Origin;
-//}
-//
-//const std::string& Eloquent::QueueItem::Origin() const {
-//	return m_Origin;
-//}
+Eloquent::QueueItem::QueueItem( const QueueItem& rhs )
+: m_Data( rhs.Data() )
+, m_Origin( rhs.Origin() )
+, m_Destination( rhs.Destination() )
+{}
+
+Eloquent::QueueItem& Eloquent::QueueItem::operator=( const QueueItem& rhs ) {
+	m_Data = rhs.Data();
+	
+	m_Origin = rhs.Origin();
+	m_Destination = rhs.Destination();
+	
+	return *this;
+	
+}

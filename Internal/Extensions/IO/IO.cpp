@@ -3,6 +3,9 @@
 // See LICENSE.txt
 //
 
+// C++
+#include <iostream>
+
 // Internal
 #include "Extensions/IO/IO.h"
 #include "Extensions/Filters/Filter.h"
@@ -19,7 +22,9 @@ Eloquent::IO::IO( const  boost::property_tree::ptree::value_type& i_Config
 				 , unsigned int& i_NumWriters )
 : Eloquent::Extension( i_Config )
 , m_SetOrigin( m_Config.second.get_optional<std::string>( "set_origin" ) )
-, m_IfOrigin( std::vector<boost::optional<std::string>>()  )
+, m_SetDestination( m_Config.second.get_optional<std::string>( "set_destination" ) )
+, m_IfOrigin( std::vector<boost::optional<std::string>>() )
+, m_IfDestination( std::vector<boost::optional<std::string>>() )
 , m_QueueMutex( i_QueueMutex )
 , m_QueueCV( i_QueueCV )
 , m_Queue( i_Queue )
@@ -29,6 +34,10 @@ Eloquent::IO::IO( const  boost::property_tree::ptree::value_type& i_Config
 	for( boost::property_tree::ptree::iterator it = m_Config.second.begin(); it != m_Config.second.end(); ++it ) {
 		if( (*it).first == "if_origin" ) {
 			m_IfOrigin.push_back( boost::optional<std::string>( (*it).second.get_value<std::string>() ) );
+		}
+		
+		if( (*it).first == "if_destination" ) {
+			m_IfDestination.push_back( boost::optional<std::string>( (*it).second.get_value<std::string>() ) );
 		}
 		
 		if( (*it).first == "filter" ) {
@@ -64,19 +73,39 @@ void Eloquent::IO::PopQueueItem() {
 }
 
 void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
+	// Add origin
+	if( m_SetOrigin.is_initialized() ) {
+		i_QueueItem.Origin() = m_SetOrigin.get();
+	}
+	
+	// Add destination
+	if( m_SetDestination.is_initialized() ) {
+		i_QueueItem.Destination() = m_SetDestination.get();
+	}
+	
 	// Apply filters
+	bool FilterSucceeded = true;
+	
 	for( Filter* F : m_Filters ) {
-		(*F) << i_QueueItem.Data();
+		FilterSucceeded = (*F) << i_QueueItem.Data();
+		
+		if( !FilterSucceeded ) {
+			break;
+		}
+		
 	}
 	
 	// Add to the main queue
-	if( i_QueueItem.Data().length() ) {
-		std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
-		m_Queue.push( i_QueueItem );
+	if( FilterSucceeded ) {
+		if( i_QueueItem.Data().length() ) {
+			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+			m_Queue.push( i_QueueItem );
+		}
+		
+		// Notify all the writers of a new item
+		m_QueueCV.notify_one();
+		
 	}
-	
-	// Notify all the writers of a new item
-	m_QueueCV.notify_one();
 	
 }
 
@@ -94,8 +123,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			while( !m_Queue.size() || m_Queue.front().Accessed()[this] ) {
 				m_QueueCV.wait( QueueLock );
 			}
-			
-			syslog( LOG_DEBUG, "fetching 1 of %lu item(s) #IO::NextQueueItem #Debug", m_Queue.size() );
 			
 		}
 		
@@ -128,35 +155,66 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			
 		}
 		
-		// Apply filters
+		// Filter out new data by its destination
 		{
-			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+			bool AcceptDestination = static_cast<bool>( !m_IfDestination.size() );
 			
-			for( Filter* F : m_Filters ) {
-				(*F) << m_Queue.front().Data();
-			}
-			
-		}
-		
-		// Any data left to return?
-		{
-			bool EmptyData = false;
-			
-			{
+			// if_destination is set, but we don't know what it is...
+			if( !AcceptDestination ) {
 				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 				
-				if( !m_Queue.front().Data().length() ) {
-					syslog( LOG_DEBUG, "data is %lu bytes long #IO::NextQueueItem #Debug", m_Queue.size() );
-					EmptyData = true;
+				for( boost::optional<std::string>& Destination : m_IfDestination ) {
+					if( Destination.get() == "all" || Destination.get() == m_Queue.front().Destination() ) {
+						AcceptDestination = true;
+						break;
+					}
+					
+				}
+				
+				if( !AcceptDestination ) {
+					syslog( LOG_DEBUG, "not accepting destination %s #IO::NextQueueItem #Debug", m_Queue.front().Origin().c_str() );
 				}
 				
 			}
 			
-			if( EmptyData ) {
+			if( !AcceptDestination ) {
 				PopQueueItem();
 				continue;
 			}
 			
+		}
+		
+		// At this point we can get our own copy the data to manipulate/filter
+		{
+			{
+				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
+				m_Item = m_Queue.front();
+			}
+			
+			PopQueueItem();
+			
+		}
+		
+		// Apply filters
+		{
+			bool FilterDidSucceed = true;
+			
+			for( Filter* F : m_Filters ) {
+				if( !(FilterDidSucceed = (*F) << m_Item.Data()) ) {
+					break;
+				}
+				
+			}
+			
+			if( !FilterDidSucceed ) {
+				continue;
+			}
+			
+		}
+		
+		// No point in returning an empty string...
+		if( !m_Item.Data().length() ) {
+			continue;
 		}
 		
 		// Return data
@@ -164,6 +222,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 
 	}
 	
-	return m_Queue.front();
+	return m_Item;
 	
 }
