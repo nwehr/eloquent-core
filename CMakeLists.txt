@@ -3,16 +3,14 @@
 ##############################################################################
 cmake_minimum_required( VERSION 2.8 )
 
-project( eloquentd )
+set( target_exe eloquentd )
+set( target_lib Eloquent )
 
 set( Boost_USE_MULTITHREADED	ON )
 set( Boost_USE_STATIC_LIBS		OFF )
 set( Boost_USE_STATIC_RUNTIME	OFF )
 
 find_package( Boost 1.55.0 COMPONENTS system filesystem program_options )
-
-set( target_exe eloquentd )
-set( target_lib Eloquent )
 
 set( CMAKE_CXX_FLAGS                "-Wall -std=c++11" )
 set( CMAKE_CXX_FLAGS_DEBUG          "-g" )
@@ -108,12 +106,12 @@ endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
 	if( NOT EXISTS "/Library/LaunchDaemons/com.evrichart.eloquentd.plist" )
-		install( FILES "${PROJECT_SOURCE_DIR}/Config/com.evrichart.eloquentd.plist" DESTINATION "/Library/LaunchDaemons" )
+		install( FILES "${PROJECT_SOURCE_DIR}/Config/Library-LaunchDaemons/com.evrichart.eloquentd.plist" DESTINATION "/Library/LaunchDaemons" )
 		install( CODE "execute_process( COMMAND sudo launchctl load /Library/LaunchDaemons/com.evrichart.eloquentd.plist )" )
 	endif()
 endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
-	install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquentd.conf" DESTINATION "/etc/init" )
-	install( FILES "${PROJECT_SOURCE_DIR}/Config/eloquentd" DESTINATION "/etc/logrotate.d" )
+	install( FILES "${PROJECT_SOURCE_DIR}/Config/etc-init/eloquentd.conf" DESTINATION "/etc/init" )
+	install( FILES "${PROJECT_SOURCE_DIR}/Config/etc-logrotate.d/eloquentd" DESTINATION "/etc/logrotate.d" )
 endif()

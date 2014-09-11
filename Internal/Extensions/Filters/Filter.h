@@ -23,11 +23,12 @@ namespace Eloquent {
 		explicit Filter( const boost::property_tree::ptree::value_type& i_Config );
 		virtual ~Filter() = default;
 		
+		bool Continue( bool ); 
+		
 		virtual bool operator<<( std::string& ) = 0;
 		
 	protected:
-		boost::optional<bool> m_ContinueOnFail; 
-		
+		boost::optional<bool> m_ContinueOnFail;
 	};
 
 }

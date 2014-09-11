@@ -41,7 +41,10 @@ namespace Eloquent {
 		virtual void operator()() = 0;
 		
 		boost::optional<std::string>& SetOrigin();
+		boost::optional<std::string>& SetDestination();
+		
 		std::vector<boost::optional<std::string>>& IfOrigin();
+		std::vector<boost::optional<std::string>>& IfDestination();
 		
 		void PopQueueItem();
 		
@@ -56,7 +59,10 @@ namespace Eloquent {
 		
 	protected:
 		boost::optional<std::string> m_SetOrigin;
+		boost::optional<std::string> m_SetDestination;
+		
 		std::vector<boost::optional<std::string>> m_IfOrigin;
+		std::vector<boost::optional<std::string>> m_IfDestination;
 		
 		// Shared Memory
 		std::mutex&					m_QueueMutex;
@@ -66,6 +72,9 @@ namespace Eloquent {
 		
 		// Filters
 		std::deque<Filter*>	m_Filters;
+		
+		// Data
+		QueueItem m_Item; 
 		
 	};
 	
