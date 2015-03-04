@@ -6,37 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5807151519ACB297003D483D /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151219ACB297003D483D /* libboost_filesystem-mt.dylib */; };
-		5807151619ACB297003D483D /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151319ACB297003D483D /* libboost_program_options-mt.dylib */; };
-		5807151719ACB297003D483D /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151419ACB297003D483D /* libboost_system-mt.dylib */; };
-		5807151919ACB2A6003D483D /* libEloquent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151819ACB2A6003D483D /* libEloquent.dylib */; };
-		5807152D19ACBA2B003D483D /* libSystem.B.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807152C19ACBA2B003D483D /* libSystem.B.dylib */; };
-		5807153619ACBF2B003D483D /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E4FE19A3DFE4006451E4 /* Extension.cpp */; };
-		5807153819ACBF36003D483D /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E50319A3DFE4006451E4 /* Filter.cpp */; };
-		5807153A19ACBF3B003D483D /* ExtensionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E51219A520F5006451E4 /* ExtensionManager.cpp */; };
-		5807153C19ACBF42003D483D /* QueueItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E46F199E3549006451E4 /* QueueItem.cpp */; };
-		5807153D19ACBF83003D483D /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151219ACB297003D483D /* libboost_filesystem-mt.dylib */; };
-		5807153E19ACBF86003D483D /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5807151419ACB297003D483D /* libboost_system-mt.dylib */; };
-		5827E437199D3A22006451E4 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E3CD199D3A22006451E4 /* Application.cpp */; };
-		5827E453199D3A22006451E4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5827E435199D3A22006451E4 /* main.cpp */; };
-		58E13D0019B0F38700B82ED5 /* IOFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13CFF19B0F38700B82ED5 /* IOFactory.cpp */; };
-		58E13D0219B0F3D000B82ED5 /* FilterFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13D0119B0F3D000B82ED5 /* FilterFactory.cpp */; };
-		58E13D0419B0F45E00B82ED5 /* ExtensionFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58E13D0319B0F45E00B82ED5 /* ExtensionFactory.cpp */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		5827E3C0199D39E7006451E4 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		5807151219ACB297003D483D /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
 		5807151319ACB297003D483D /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
@@ -44,8 +13,6 @@
 		5807151819ACB2A6003D483D /* libEloquent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEloquent.dylib; path = ../../../../../../usr/local/lib/libEloquent.dylib; sourceTree = "<group>"; };
 		5807151A19ACB2C0003D483D /* libstreamlog.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstreamlog.dylib; path = ../../../../../../opt/local/lib/libstreamlog.dylib; sourceTree = "<group>"; };
 		5807152C19ACBA2B003D483D /* libSystem.B.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.B.dylib; path = ../../../../../../usr/lib/libSystem.B.dylib; sourceTree = "<group>"; };
-		5807153219ACBF21003D483D /* libEloquent.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libEloquent.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		5827E3C2199D39E7006451E4 /* eloquentd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eloquentd; sourceTree = BUILT_PRODUCTS_DIR; };
 		5827E3CD199D3A22006451E4 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		5827E3CE199D3A22006451E4 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		5827E40E199D3A22006451E4 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -76,30 +43,6 @@
 		58E13D1219B7392900B82ED5 /* com.evrichart.eloquentd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.evrichart.eloquentd.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		5807152F19ACBF21003D483D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5807153E19ACBF86003D483D /* libboost_system-mt.dylib in Frameworks */,
-				5807153D19ACBF83003D483D /* libboost_filesystem-mt.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5827E3BF199D39E7006451E4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5807152D19ACBA2B003D483D /* libSystem.B.dylib in Frameworks */,
-				5807151919ACB2A6003D483D /* libEloquent.dylib in Frameworks */,
-				5807151519ACB297003D483D /* libboost_filesystem-mt.dylib in Frameworks */,
-				5807151619ACB297003D483D /* libboost_program_options-mt.dylib in Frameworks */,
-				5807151719ACB297003D483D /* libboost_system-mt.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
 		5827E3B9199D39E7006451E4 = {
 			isa = PBXGroup;
@@ -118,8 +61,6 @@
 		5827E3C3199D39E7006451E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5827E3C2199D39E7006451E4 /* eloquentd */,
-				5807153219ACBF21003D483D /* libEloquent.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -241,52 +182,22 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		5807153019ACBF21003D483D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
-/* Begin PBXNativeTarget section */
-		5807153119ACBF21003D483D /* Eloquent */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5807153319ACBF21003D483D /* Build configuration list for PBXNativeTarget "Eloquent" */;
+/* Begin PBXLegacyTarget section */
+		587077921A66FB4600774B11 /* eloquentd */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 587077931A66FB4600774B11 /* Build configuration list for PBXLegacyTarget "eloquentd" */;
 			buildPhases = (
-				5807152E19ACBF21003D483D /* Sources */,
-				5807152F19ACBF21003D483D /* Frameworks */,
-				5807153019ACBF21003D483D /* Headers */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Eloquent;
-			productName = Eloquent;
-			productReference = 5807153219ACBF21003D483D /* libEloquent.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
-		};
-		5827E3C1199D39E7006451E4 /* eloquentd */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5827E3C9199D39E7006451E4 /* Build configuration list for PBXNativeTarget "eloquentd" */;
-			buildPhases = (
-				5827E3BE199D39E7006451E4 /* Sources */,
-				5827E3BF199D39E7006451E4 /* Frameworks */,
-				5827E3C0199D39E7006451E4 /* CopyFiles */,
-			);
-			buildRules = (
-			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "/Users/nathanwehr/Cloud/Copy/Develop/sysapp/eloquent/eloquent-core/build";
 			dependencies = (
 			);
 			name = eloquentd;
+			passBuildSettingsInEnvironment = 1;
 			productName = eloquentd;
-			productReference = 5827E3C2199D39E7006451E4 /* eloquentd */;
-			productType = "com.apple.product-type.tool";
 		};
-/* End PBXNativeTarget section */
+/* End PBXLegacyTarget section */
 
 /* Begin PBXProject section */
 		5827E3BA199D39E7006451E4 /* Project object */ = {
@@ -295,11 +206,8 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "EvriChart, Inc.";
 				TargetAttributes = {
-					5807153119ACBF21003D483D = {
-						CreatedOnToolsVersion = 6.0;
-					};
-					5827E3C1199D39E7006451E4 = {
-						CreatedOnToolsVersion = 6.0;
+					587077921A66FB4600774B11 = {
+						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
 			};
@@ -315,75 +223,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5827E3C1199D39E7006451E4 /* eloquentd */,
-				5807153119ACBF21003D483D /* Eloquent */,
+				587077921A66FB4600774B11 /* eloquentd */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		5807152E19ACBF21003D483D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5807153619ACBF2B003D483D /* Extension.cpp in Sources */,
-				5807153819ACBF36003D483D /* Filter.cpp in Sources */,
-				5807153A19ACBF3B003D483D /* ExtensionManager.cpp in Sources */,
-				5807153C19ACBF42003D483D /* QueueItem.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5827E3BE199D39E7006451E4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				58E13D0219B0F3D000B82ED5 /* FilterFactory.cpp in Sources */,
-				58E13D0019B0F38700B82ED5 /* IOFactory.cpp in Sources */,
-				58E13D0419B0F45E00B82ED5 /* ExtensionFactory.cpp in Sources */,
-				5827E437199D3A22006451E4 /* Application.cpp in Sources */,
-				5827E453199D3A22006451E4 /* main.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
 /* Begin XCBuildConfiguration section */
-		5807153419ACBF21003D483D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /usr/local;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INSTALL_PATH = /lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		5807153519ACBF21003D483D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /usr/local;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				INSTALL_PATH = /lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		5827E3C7199D39E7006451E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -484,30 +329,29 @@
 			};
 			name = Release;
 		};
-		5827E3CA199D39E7006451E4 /* Debug */ = {
+		587077941A66FB4600774B11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /usr/local;
-				INSTALL_PATH = /sbin;
-				LIBRARY_SEARCH_PATHS = (
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
 					"$(inherited)",
-					"$(PROJECT_DIR)/build",
-					/opt/local/lib,
 				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		5827E3CB199D39E7006451E4 /* Release */ = {
+		587077951A66FB4600774B11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /usr/local;
-				INSTALL_PATH = /sbin;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build",
-					/opt/local/lib,
-				);
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -515,15 +359,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5807153319ACBF21003D483D /* Build configuration list for PBXNativeTarget "Eloquent" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5807153419ACBF21003D483D /* Debug */,
-				5807153519ACBF21003D483D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5827E3BD199D39E7006451E4 /* Build configuration list for PBXProject "eloquentd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -533,14 +368,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5827E3C9199D39E7006451E4 /* Build configuration list for PBXNativeTarget "eloquentd" */ = {
+		587077931A66FB4600774B11 /* Build configuration list for PBXLegacyTarget "eloquentd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5827E3CA199D39E7006451E4 /* Debug */,
-				5827E3CB199D39E7006451E4 /* Release */,
+				587077941A66FB4600774B11 /* Debug */,
+				587077951A66FB4600774B11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
