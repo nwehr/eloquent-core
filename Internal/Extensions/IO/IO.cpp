@@ -44,11 +44,8 @@ Eloquent::IO::IO( const  boost::property_tree::ptree::value_type& i_Config
 			FilterFactory* MyFilterFactory = reinterpret_cast<FilterFactory*>( ExtensionManager::Instance().LoadExtension( (*it).second.get<std::string>( "load" ) ) );
 			
 			m_Filters.push_back( MyFilterFactory->New( boost::property_tree::ptree::value_type( *it ) ) );
-			
 		}
-		
 	}
-
 }
 
 boost::optional<std::string>& Eloquent::IO::SetOrigin() {
@@ -65,21 +62,28 @@ void Eloquent::IO::PopQueueItem() {
 	// Mark this item as read by us
 	m_Queue.front().Accessed()[this] = true;
 	
+	// syslog(LOG_DEBUG, "marking queue item as read #Debug #Core");
+	
 	// Make sure all the writers have read this item before removing it
 	if( m_Queue.front().Accessed().size() == m_NumWriters ) {
+		// syslog(LOG_DEBUG, "removing queue item #Debug #Core");
+		
 		m_Queue.pop();
 	}
-	
 }
 
 void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 	// Add origin
 	if( m_SetOrigin.is_initialized() ) {
+		// syslog(LOG_DEBUG, "setting origin for queue item #Debug #Reader #Core");
+		
 		i_QueueItem.Origin() = m_SetOrigin.get();
 	}
 	
 	// Add destination
 	if( m_SetDestination.is_initialized() ) {
+		// syslog(LOG_DEBUG, "setting destination for queue item #Debug #Reader #Core");
+		
 		i_QueueItem.Destination() = m_SetDestination.get();
 	}
 	
@@ -87,12 +91,15 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 	bool FilterSucceeded = true;
 	
 	for( Filter* F : m_Filters ) {
+		// syslog(LOG_DEBUG, "applying filter for queue item #Debug #Reader #Core");
+		
 		FilterSucceeded = (*F) << i_QueueItem.Data();
 		
 		if( !FilterSucceeded ) {
+			syslog(LOG_DEBUG, "filter failed for queue item #Debug #Reader #Core");
+			
 			break;
 		}
-		
 	}
 	
 	// Add to the main queue
@@ -100,13 +107,15 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 		if( i_QueueItem.Data().length() ) {
 			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 			m_Queue.push( i_QueueItem );
+			
+			// syslog(LOG_DEBUG, "pushing queue item onto queue #Debug #Reader #Core");
 		}
+		
+		syslog(LOG_DEBUG, "notifying all writers of a new queue item #Debug #Reader #Core");
 		
 		// Notify all the writers of a new item
 		m_QueueCV.notify_one();
-		
 	}
-	
 }
 
 void Eloquent::IO::PushQueueItem( const QueueItem& i_Item ) {
@@ -118,13 +127,16 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 	while( true ) {
 		// Wait for new data
 		{
+			syslog(LOG_DEBUG, "waiting for a queue item #Debug #Writer #Core");
+			
 			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 			
 			while( !m_Queue.size() || m_Queue.front().Accessed()[this] ) {
 				m_QueueCV.wait( QueueLock );
 			}
-			
 		}
+		
+		// syslog(LOG_DEBUG, "recieved a queue item #Debug #Writer #Core");
 		
 		// Filter out new data by its origin
 		{
@@ -139,20 +151,17 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 						AcceptOrigin = true;
 						break;
 					}
-					
 				}
 				
 				if( !AcceptOrigin ) {
 					syslog( LOG_DEBUG, "not accepting origin %s #IO::NextQueueItem #Debug", m_Queue.front().Origin().c_str() );
 				}
-				
 			}
 			
 			if( !AcceptOrigin ) {
 				PopQueueItem();
 				continue;
 			}
-			
 		}
 		
 		// Filter out new data by its destination
@@ -168,31 +177,31 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 						AcceptDestination = true;
 						break;
 					}
-					
 				}
 				
 				if( !AcceptDestination ) {
 					syslog( LOG_DEBUG, "not accepting destination %s #IO::NextQueueItem #Debug", m_Queue.front().Origin().c_str() );
 				}
-				
 			}
 			
 			if( !AcceptDestination ) {
 				PopQueueItem();
 				continue;
 			}
-			
 		}
 		
 		// At this point we can get our own copy the data to manipulate/filter
 		{
 			{
+				// syslog(LOG_DEBUG, "copying the queue item #Debug #Writer #Core");
+				
 				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 				m_Item = m_Queue.front();
 			}
 			
-			PopQueueItem();
+			// syslog(LOG_DEBUG, "removing the queue item #Debug #Writer #Core");
 			
+			PopQueueItem();
 		}
 		
 		// Apply filters
@@ -200,6 +209,8 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			bool FilterDidSucceed = true;
 			
 			for( Filter* F : m_Filters ) {
+				// syslog(LOG_DEBUG, "applying a filter to the queue item #Debug #Writer #Core");
+				
 				if( !(FilterDidSucceed = (*F) << m_Item.Data()) ) {
 					break;
 				}
@@ -209,7 +220,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			if( !FilterDidSucceed ) {
 				continue;
 			}
-			
 		}
 		
 		// No point in returning an empty string...
@@ -219,9 +229,7 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 		
 		// Return data
 		break;
-
 	}
 	
 	return m_Item;
-	
 }

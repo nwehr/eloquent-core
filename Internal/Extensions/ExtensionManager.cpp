@@ -32,9 +32,10 @@ Eloquent::ExtensionFactory* Eloquent::ExtensionManager::LoadExtension( boost::fi
 		// Have we already loaded an extension for the given path? If so, return the factory object for it
 		for( std::tuple<void*, std::string, ExtensionFactory*>& Extension : m_Extensions ) {
 			if( i_ExtensionPath.string() == std::get<1>( Extension ) ) {
+				// syslog(LOG_DEBUG, "reloading extension %s #Debug #Core", i_ExtensionPath.string().c_str());
+				
 				return std::get<2>( Extension );
 			}
-			
 		}
 		
 		// Does this path even exist?

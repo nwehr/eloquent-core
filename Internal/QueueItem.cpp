@@ -26,5 +26,4 @@ Eloquent::QueueItem& Eloquent::QueueItem::operator=( const QueueItem& rhs ) {
 	m_Destination = rhs.Destination();
 	
 	return *this;
-	
 }
