@@ -62,28 +62,20 @@ void Eloquent::IO::PopQueueItem() {
 	// Mark this item as read by us
 	m_Queue.front().Accessed()[this] = true;
 	
-	// syslog(LOG_DEBUG, "marking queue item as read #Debug #Core");
-	
 	// Make sure all the writers have read this item before removing it
 	if( m_Queue.front().Accessed().size() == m_NumWriters ) {
-		// syslog(LOG_DEBUG, "removing queue item #Debug #Core");
-		
 		m_Queue.pop();
 	}
 }
 
-void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
+void Eloquent::IO::PushQueueItem( QueueItem i_QueueItem ) {
 	// Add origin
 	if( m_SetOrigin.is_initialized() ) {
-		// syslog(LOG_DEBUG, "setting origin for queue item #Debug #Reader #Core");
-		
 		i_QueueItem.Origin() = m_SetOrigin.get();
 	}
 	
 	// Add destination
 	if( m_SetDestination.is_initialized() ) {
-		// syslog(LOG_DEBUG, "setting destination for queue item #Debug #Reader #Core");
-		
 		i_QueueItem.Destination() = m_SetDestination.get();
 	}
 	
@@ -91,13 +83,8 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 	bool FilterSucceeded = true;
 	
 	for( Filter* F : m_Filters ) {
-		// syslog(LOG_DEBUG, "applying filter for queue item #Debug #Reader #Core");
-		
-		FilterSucceeded = (*F) << i_QueueItem.Data();
-		
-		if( !FilterSucceeded ) {
+		if( !(FilterSucceeded = (*F) << i_QueueItem.Data()) ){
 			syslog(LOG_DEBUG, "filter failed for queue item #Debug #Reader #Core");
-			
 			break;
 		}
 	}
@@ -107,8 +94,6 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 		if( i_QueueItem.Data().length() ) {
 			std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 			m_Queue.push( i_QueueItem );
-			
-			// syslog(LOG_DEBUG, "pushing queue item onto queue #Debug #Reader #Core");
 		}
 		
 		syslog(LOG_DEBUG, "notifying all writers of a new queue item #Debug #Reader #Core");
@@ -116,11 +101,6 @@ void Eloquent::IO::PushQueueItem( QueueItem& i_QueueItem ) {
 		// Notify all the writers of a new item
 		m_QueueCV.notify_one();
 	}
-}
-
-void Eloquent::IO::PushQueueItem( const QueueItem& i_Item ) {
-	QueueItem Item = i_Item;
-	PushQueueItem( Item );
 }
 
 Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
@@ -135,8 +115,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 				m_QueueCV.wait( QueueLock );
 			}
 		}
-		
-		// syslog(LOG_DEBUG, "recieved a queue item #Debug #Writer #Core");
 		
 		// Filter out new data by its origin
 		{
@@ -193,13 +171,9 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 		// At this point we can get our own copy the data to manipulate/filter
 		{
 			{
-				// syslog(LOG_DEBUG, "copying the queue item #Debug #Writer #Core");
-				
 				std::unique_lock<std::mutex> QueueLock( m_QueueMutex );
 				m_Item = m_Queue.front();
 			}
-			
-			// syslog(LOG_DEBUG, "removing the queue item #Debug #Writer #Core");
 			
 			PopQueueItem();
 		}
@@ -209,8 +183,6 @@ Eloquent::QueueItem& Eloquent::IO::NextQueueItem() {
 			bool FilterDidSucceed = true;
 			
 			for( Filter* F : m_Filters ) {
-				// syslog(LOG_DEBUG, "applying a filter to the queue item #Debug #Writer #Core");
-				
 				if( !(FilterDidSucceed = (*F) << m_Item.Data()) ) {
 					break;
 				}
